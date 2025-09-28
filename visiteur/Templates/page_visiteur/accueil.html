@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FindHome - Trouvez facilement où vous installer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/accueil.css' %}">
+
+</head>
+<body>
+    <!-- Header -->
+    <header id="header">
+        <div class="container">
+            <nav class="navbar">
+                <a href="#" class="logo">
+                    <i class="fas fa-home"></i>
+                    FindHome
+                </a>
+                <ul class="nav-links">
+                    <li><a href="#home">Accueil</a></li>
+                    <li><a href="#properties">Propriétés</a></li>
+                    <li><a href="#about">À propos</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#testimonials">Témoignages</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <div class="nav-actions">
+                    <a href="{% url 'inscription_utilisateur' %}" class="btn btn-secondary">Connexion</a>
+                    <button class="mobile-menu-btn">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-background">
+            <img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Belle maison avec jardin">
+        </div>
+        <div class="container">
+            <div class="hero-content">
+                <h1>Trouvez facilement où vous installer</h1>
+                <p>Découvrez des milliers de propriétés (maisons, villas, chambres, appartements) à travers le pays pour votre prochain déménagement</p>
+                <div class="hero-buttons">
+                    <a href="#properties" class="btn btn-primary btn-large">Explorer les propriétés</a>
+                    <a href="#about" class="btn btn-secondary btn-large">En savoir plus</a>
+                </div>
+                <div class="search-box">
+                    <form class="search-form">
+                        <div class="form-group">
+                            <label for="location">Localisation</label>
+                            <input type="text" id="location" class="form-control" placeholder="Où souhaitez-vous habiter?">
+                        </div>
+                        <div class="form-group">
+                            <label for="property-type">Type de propriété</label>
+                            <select id="property-type" class="form-control">
+                                <option>Tous types</option>
+                                <option>Maison</option>
+                                <option>Villa</option>
+                                <option>Appartement</option>
+                                <option>Chambre</option>
+                                <option>Studio</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="budget">Budget</label>
+                            <select id="budget" class="form-control">
+                                <option>Tous budgets</option>
+                                <option>Moins de 500€</option>
+                                <option>500€ - 1000€</option>
+                                <option>1000€ - 2000€</option>
+                                <option>Plus de 2000€</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary" style="margin-top: 28px;">Rechercher</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="section features" id="services">
+        <div class="container">
+            <h2 class="section-title">Pourquoi choisir FindHome</h2>
+            <p class="section-subtitle">Nous simplifions votre recherche de logement avec des outils efficaces et un accompagnement personnalisé.</p>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h3>Recherche avancée</h3>
+                    <p>Filtrez facilement par localisation, type de propriété, budget et critères spécifiques.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-map-marked-alt"></i>
+                    </div>
+                    <h3>Localisations précises</h3>
+                    <p>Toutes nos propriétés sont géolocalisées avec des informations détaillées sur le quartier.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h3>Accompagnement personnalisé</h3>
+                    <p>Notre équipe vous assiste dans toutes les étapes de votre recherche et installation.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Properties Section -->
+    <section class="section properties" id="properties">
+        <div class="container">
+            <div class="properties-header">
+                <h2 class="section-title">Propriétés disponibles</h2>
+                <div class="properties-filter">
+                    <button class="filter-btn active">Tous</button>
+                    <button class="filter-btn">Maisons</button>
+                    <button class="filter-btn">Villas</button>
+                    <button class="filter-btn">Appartements</button>
+                    <button class="filter-btn">Chambres</button>
+                </div>
+            </div>
+            <div class="properties-grid">
+                <div class="property-card">
+                    <div class="property-img">
+                        <img src="https://images.unsplash.com/photo-1518780664697-55e3ad937233?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2065&q=80" alt="Maison familiale spacieuse">
+                        <div class="property-badge">Nouveau</div>
+                    </div>
+                    <div class="property-content">
+                        <div class="property-price">1200€ <span>/mois</span></div>
+                        <h3 class="property-title">Maison familiale spacieuse</h3>
+                        <div class="property-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            Lyon, France
+                        </div>
+                        <div class="property-features">
+                            <div class="property-feature">
+                                <i class="fas fa-bed"></i> 4 chambres
+                            </div>
+                            <div class="property-feature">
+                                <i class="fas fa-bath"></i> 2 salles de bain
+                            </div>
+                            <div class="property-feature">
+                                <i class="fas fa-expand"></i> 150 m²
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="property-card">
+                    <div class="property-img">
+                        <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Appartement moderne centre-ville">
+                        <div class="property-badge">Populaire</div>
+                    </div>
+                    <div class="property-content">
+                        <div class="property-price">750€ <span>/mois</span></div>
+                        <h3 class="property-title">Appartement moderne centre-ville</h3>
+                        <div class="property-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            Toulouse, France
+                        </div>
+                        <div class="property-features">
+                            <div class="property-feature">
+                                <i class="fas fa-bed"></i> 2 chambres
+                            </div>
+                            <div class="property-feature">
+                                <i class="fas fa-bath"></i> 1 salle de bain
+                            </div>
+                            <div class="property-feature">
+                                <i class="fas fa-expand"></i> 65 m²
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="property-card">
+                    <div class="property-img">
+                        <img src="https://images.unsplash.com/photo-1613977257363-707ba9348227?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Villa avec piscine">
+                    </div>
+                    <div class="property-content">
+                        <div class="property-price">2000€ <span>/mois</span></div>
+                        <h3 class="property-title">Villa avec piscine</h3>
+                        <div class="property-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            Nice, France
+                        </div>
+                        <div class="property-features">
+                            <div class="property-feature">
+                                <i class="fas fa-bed"></i> 5 chambres
+                            </div>
+                            <div class="property-feature">
+                                <i class="fas fa-bath"></i> 3 salles de bain
+                            </div>
+                            <div class="property-feature">
+                                <i class="fas fa-expand"></i> 220 m²
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 50px;">
+                <a href="#" class="btn btn-primary btn-large">Voir toutes les propriétés</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="section testimonials" id="testimonials">
+        <div class="container">
+            <h2 class="section-title">Ce que disent nos utilisateurs</h2>
+            <p class="section-subtitle">Découvrez les expériences de personnes qui ont trouvé leur nouveau logement grâce à FindHome.</p>
+            <div class="testimonials-container">
+                <div class="testimonial-slider">
+                    <div class="testimonial-track">
+                        <div class="testimonial-slide">
+                            <div class="testimonial-card">
+                                <p class="testimonial-text">J'ai trouvé l'appartement parfait en seulement une semaine grâce à FindHome. L'interface est intuitive et les propriétaires sont vérifiés. Je recommande vivement!</p>
+                                <div class="testimonial-author">
+                                    <div class="author-avatar">
+                                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Marie Dubois">
+                                    </div>
+                                    <div class="author-info">
+                                        <h4>Marie Dubois</h4>
+                                        <p>Étudiante, Paris</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="testimonial-slide">
+                            <div class="testimonial-card">
+                                <p class="testimonial-text">En tant que jeune famille, nous cherchions une maison avec jardin. FindHome nous a permis de trouver exactement ce qu'il nous fallait dans notre budget. Merci!</p>
+                                <div class="testimonial-author">
+                                    <div class="author-avatar">
+                                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Thomas Martin">
+                                    </div>
+                                    <div class="author-info">
+                                        <h4>Thomas Martin</h4>
+                                        <p>Famille, Lyon</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="testimonial-slide">
+                            <div class="testimonial-card">
+                                <p class="testimonial-text">Je devais déménager pour mon travail et FindHome m'a sauvé la vie! J'ai trouvé une chambre en colocation rapidement et facilement. Excellent service!</p>
+                                <div class="testimonial-author">
+                                    <div class="author-avatar">
+                                        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Sophie Leroy">
+                                    </div>
+                                    <div class="author-info">
+                                        <h4>Sophie Leroy</h4>
+                                        <p>Professionnelle, Bordeaux</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slider-nav">
+                    <div class="slider-dot active"></div>
+                    <div class="slider-dot"></div>
+                    <div class="slider-dot"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2>Prêt à trouver votre nouveau logement?</h2>
+            <p>Rejoignez des milliers de personnes satisfaites et découvrez des propriétés adaptées à vos besoins partout en France.</p>
+            <div class="cta-buttons">
+                <a href="#" class="btn btn-light btn-large">Commencer la recherche</a>
+                <a href="#" class="btn btn-secondary btn-large">Contactez-nous</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>FindHome</h3>
+                    <p>Votre partenaire de confiance pour trouver facilement où vous installer. Maisons, villas, appartements et chambres dans toute la France.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Liens rapides</h3>
+                    <ul class="footer-links">
+                        <li><a href="#home">Accueil</a></li>
+                        <li><a href="#properties">Propriétés</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#about">À propos</a></li>
+                        <li><a href="#testimonials">Témoignages</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Types de propriétés</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Maisons</a></li>
+                        <li><a href="#">Villas</a></li>
+                        <li><a href="#">Appartements</a></li>
+                        <li><a href="#">Chambres</a></li>
+                        <li><a href="#">Studios</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact</h3>
+                    <ul class="footer-contact">
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>123 Avenue de la République, 75011 Paris, France</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone"></i>
+                            <span>+33 1 23 45 67 89</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <span>contact@findhome.fr</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 FindHome. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{% static 'js/accueil.js' %}">
+      
+    </script>
+</body>
+</html>

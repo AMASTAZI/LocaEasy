@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FindHome - Signature du Contrat de Bail</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/contrat.css' %}">
+</head>
+<body>
+    <!-- Header -->
+    <header id="header">
+        <div class="container">
+            <nav class="navbar">
+                <a href="#" class="logo">
+                    <i class="fas fa-home"></i>
+                    FindHome
+                </a>
+                <ul class="nav-links">
+                    <li><a href="#home">Accueil</a></li>
+                    <li><a href="#properties">Propriétés</a></li>
+                    <li><a href="#about">À propos</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#testimonials">Témoignages</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <div class="nav-actions">
+                    <a href="#" class="btn btn-secondary">Mon Compte</a>
+                    <button class="mobile-menu-btn">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Contract Section -->
+    <section class="contract-section" id="contract">
+        <div class="container">
+            <h2 class="section-title">Signature du Contrat de Bail</h2>
+            <div class="contract-container">
+                <!-- Contract Document -->
+                <div class="contract-document">
+                    <div class="contract-header">
+                        <h1 class="contract-title">CONTRAT DE BAIL RÉSIDENTIEL</h1>
+                        <p class="contract-subtitle">Entre le Bailleur et le Locataire</p>
+                    </div>
+                    
+                    <div class="contract-body">
+                        <div class="contract-section-title">ARTICLE 1 - OBJET DU CONTRAT</div>
+                        <div class="contract-clause">
+                            <p>Le présent contrat a pour objet la location d'un logement situé :</p>
+                            <p><strong>Adresse :</strong> 15 Rue de la République, 31000 Toulouse</p>
+                            <p><strong>Type :</strong> Appartement T2 de 65 m²</p>
+                            <p><strong>Étage :</strong> 3ème étage avec ascenseur</p>
+                        </div>
+                        
+                        <div class="contract-section-title">ARTICLE 2 - DURÉE DU BAIL</div>
+                        <div class="contract-clause">
+                            <p>Le présent bail est consenti pour une durée de <strong>3 ans</strong> à compter du <strong>1er septembre 2023</strong> et se terminant le <strong>31 août 2026</strong>.</p>
+                            <p>Le bail est renouvelable tacitement par périodes triennales successives, sauf dénonciation par l'une ou l'autre des parties.</p>
+                        </div>
+                        
+                        <div class="contract-section-title">ARTICLE 3 - LOYER ET CHARGES</div>
+                        <div class="contract-clause">
+                            <p>Le loyer mensuel est fixé à <strong>750 €</strong>, payable d'avance le premier jour de chaque mois.</p>
+                            <p>Une provision sur charges de <strong>80 €</strong> est due mensuellement en sus du loyer.</p>
+                            <p>La régularisation des charges aura lieu annuellement sur présentation des décomptes.</p>
+                        </div>
+                        
+                        <div class="contract-section-title">ARTICLE 4 - CAUTION</div>
+                        <div class="contract-clause">
+                            <p>Une caution d'un montant de <strong>750 €</strong> a été versée par le locataire lors de la signature du présent contrat.</p>
+                            <p>Cette caution sera restituée dans un délai de deux mois suivant la restitution des clés, déduction faite, le cas échéant, des sommes dues par le locataire.</p>
+                        </div>
+                        
+                        <div class="contract-section-title">ARTICLE 5 - OBLIGATIONS DU LOCATAIRE</div>
+                        <div class="contract-clause">
+                            <p>Le locataire s'engage à :</p>
+                            <ul>
+                                <li>Utiliser les lieux en bon père de famille à titre de résidence principale</li>
+                                <li>Payer le loyer et les charges aux dates convenues</li>
+                                <li>Effectuer les menues réparations d'entretien</li>
+                                <li>Permettre l'accès au logement pour les visites et travaux nécessaires</li>
+                                <li>Souscrire une assurance habitation multirisques</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="contract-section-title">ARTICLE 6 - OBLIGATIONS DU BAILLEUR</div>
+                        <div class="contract-clause">
+                            <p>Le bailleur s'engage à :</p>
+                            <ul>
+                                <li>Délivrer au locataire un logement décent et en bon état d'usage</li>
+                                <li>Effectuer les réparations locatives</li>
+                                <li>Respecter la tranquillité et la vie privée du locataire</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="contract-section-title">ARTICLE 7 - ÉTAT DES LIEUX</div>
+                        <div class="contract-clause">
+                            <p>Un état des lieux d'entrée a été établi contradictoirement le 28 août 2023.</p>
+                            <p>Un état des lieux de sortie sera établi dans les mêmes conditions à la fin du bail.</p>
+                        </div>
+                        
+                        <div class="contract-signature-area">
+                            <p>Fait à Toulouse, le <span id="contract-date">1er septembre 2023</span></p>
+                            
+                            <div class="signature-line">
+                                <div class="signature-field">
+                                    <p>Pour le Bailleur</p>
+                                    <div class="signature-line-placeholder"></div>
+                                    <p>M. Jean DUPONT</p>
+                                </div>
+                                
+                                <div class="signature-field">
+                                    <p>Pour le Locataire</p>
+                                    <div class="signature-line-placeholder"></div>
+                                    <p id="tenant-name">[Votre nom]</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Signature Panel -->
+                <div class="signature-panel">
+                    <h3 class="panel-title">Signature électronique</h3>
+                    
+                    <div class="signature-instructions">
+                        <div class="instructions-title">Instructions :</div>
+                        <ul class="instructions-list">
+                            <li>Lisez attentivement le contrat ci-contre</li>
+                            <li>Choisissez votre méthode de signature</li>
+                            <li>Signez dans l'espace prévu à cet effet</li>
+                            <li>Confirmez votre signature</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="signature-options">
+                        <div class="signature-option active" data-type="draw">
+                            <div class="option-icon">
+                                <i class="fas fa-pen"></i>
+                            </div>
+                            <div>Signer à la main</div>
+                        </div>
+                        <div class="signature-option" data-type="type">
+                            <div class="option-icon">
+                                <i class="fas fa-font"></i>
+                            </div>
+                            <div>Signature tapée</div>
+                        </div>
+                    </div>
+                    
+                    <div class="signature-canvas-container" id="draw-signature">
+                        <canvas class="signature-canvas" id="signature-canvas"></canvas>
+                        <button class="clear-signature" id="clear-signature">Effacer</button>
+                    </div>
+                    
+                    <div class="type-signature-container" id="type-signature" style="display: none;">
+                        <div class="form-group">
+                            <label for="typed-signature">Votre signature</label>
+                            <input type="text" id="typed-signature" class="form-control" placeholder="Saisissez votre nom complet">
+                        </div>
+                        <div class="form-group">
+                            <label for="signature-style">Style de signature</label>
+                            <select id="signature-style" class="form-control">
+                                <option value="cursive">Cursive</option>
+                                <option value="print">Script</option>
+                                <option value="formal">Formelle</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="signature-preview">
+                        <div class="preview-title">Aperçu de votre signature</div>
+                        <div id="signature-preview"></div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button class="btn btn-success btn-full" id="confirm-signature">Signer le contrat</button>
+                        <button class="btn btn-secondary btn-full" id="download-contract">Télécharger le contrat</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Contract Status -->
+            <div class="contract-status" id="contract-status">
+                <div class="status-header">
+                    <div class="status-icon">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <h3 class="status-title">Contrat signé avec succès !</h3>
+                </div>
+                <div class="status-message">
+                    <p>Votre contrat de bail a été signé électroniquement et est maintenant valide.</p>
+                    <p>Une copie du contrat signé a été envoyée à votre adresse email et est disponible dans votre espace personnel.</p>
+                </div>
+                <div class="next-steps">
+                    <div class="steps-title">Prochaines étapes :</div>
+                    <ul>
+                        <li>Le propriétaire va contresigner le contrat sous 48h</li>
+                        <li>Vous recevrez la version définitive par email</li>
+                        <li>Vous pouvez prendre possession des lieux à partir du 1er septembre 2023</li>
+                    </ul>
+                </div>
+                <div class="form-actions" style="margin-top: 20px;">
+                <button class="btn btn-primary btn-full" id="back-to-dashboard">Retour au tableau de bord</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>FindHome</h3>
+                    <p>Votre partenaire de confiance pour trouver facilement où vous installer. Maisons, villas, appartements et chambres dans toute la France.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Liens rapides</h3>
+                    <ul class="footer-links">
+                        <li><a href="#home">Accueil</a></li>
+                        <li><a href="#properties">Propriétés</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#about">À propos</a></li>
+                        <li><a href="#testimonials">Témoignages</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Types de propriétés</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Maisons</a></li>
+                        <li><a href="#">Villas</a></li>
+                        <li><a href="#">Appartements</a></li>
+                        <li><a href="#">Chambres</a></li>
+                        <li><a href="#">Studios</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact</h3>
+                    <ul class="footer-contact">
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>123 Avenue de la République, 75011 Paris, France</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone"></i>
+                            <span>+33 1 23 45 67 89</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <span>contact@findhome.fr</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 FindHome. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{% static 'js/contrat.js' %}">
+  
+    </script>
+
+    
+<script type="text/javascript">
+  // Back to dashboard
+            backToDashboardBtn.addEventListener('click', (e) => {
+                e.preventDefault();  // Prevent the default action (e.g., form submission)
+
+                // Show an alert before redirecting
+                alert('Retour au tableau de bord. Cette fonctionnalité serait implémentée dans une version complète.');
+
+                // Get the dashboard URL dynamically from Django template tag
+                const dashboardUrl = "{% url 'dashboard_client' %}";
+
+                // Redirect to the dashboard page
+                window.location.href = dashboardUrl;
+            });
+
+</script>
+</body>
+</html>

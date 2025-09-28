@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FindHome - Formulaire de réservation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/formulaire_reservation.css' %}">
+</head>
+<body>
+    <!-- Header -->
+    <header id="header">
+        <div class="container">
+            <nav class="navbar">
+                <a href="#" class="logo">
+                    <i class="fas fa-home"></i>
+                    FindHome
+                </a>
+                <ul class="nav-links">
+                    <li><a href="{% url 'accueil' %}">Accueil</a></li>
+                    <li><a href="{% url 'accueil' %}#properties">Propriétés</a></li>
+                    <li><a href="{% url 'accueil' %}#about">À propos</a></li>
+                    <li><a href="{% url 'accueil' %}#services">Services</a></li>
+                    <li><a href="{% url 'accueil' %}#testimonials">Témoignages</a></li>
+                    <li><a href="{% url 'accueil' %}#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Reservation Section -->
+    <section class="reservation-section" id="reservation">
+        <div class="container">
+            <h2 class="section-title">Formulaire de réservation</h2>
+            <div class="reservation-container">
+                <!-- Property Summary -->
+                <div class="property-summary">
+                    <div class="property-img">
+                        <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Appartement moderne centre-ville">
+                        <div class="property-badge">Populaire</div>
+                    </div>
+                    <div class="property-details">
+                        <div class="property-price">750€ <span>/mois</span></div>
+                        <h3 class="property-title">Appartement moderne centre-ville</h3>
+                        <div class="property-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            Toulouse, France
+                        </div>
+                        <div class="property-features">
+                            <div class="property-feature">
+                                <i class="fas fa-bed"></i> 2 chambres
+                            </div>
+                            <div class="property-feature">
+                                <i class="fas fa-bath"></i> 1 salle de bain
+                            </div>
+                            <div class="property-feature">
+                                <i class="fas fa-expand"></i> 65 m²
+                            </div>
+                        </div>
+                        <p class="property-description">
+                            Cet appartement moderne situé en plein cœur de Toulouse vous offre un cadre de vie exceptionnel. Récemment rénové, il allie confort et design contemporain. Proche de tous les commerces et transports en commun.
+                        </p>
+                        <div class="property-amenities">
+                            <span class="amenity">Wi-Fi</span>
+                            <span class="amenity">Cuisine équipée</span>
+                            <span class="amenity">Ascenseur</span>
+                            <span class="amenity">Parking</span>
+                            <span class="amenity">Balcon</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reservation Form -->
+                <div class="reservation-form-container">
+                    <h3 class="form-title">Détails de réservation</h3>
+                    <form class="reservation-form" id="reservationForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="first-name">Prénom</label>
+                                <input type="text" id="first-name" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="last-name">Nom</label>
+                                <input type="text" id="last-name" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Téléphone</label>
+                            <input type="tel" id="phone" class="form-control" required>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="check-in">Date d'arrivée</label>
+                                <input type="date" id="check-in" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="check-out">Date de départ</label>
+                                <input type="date" id="check-out" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="occupants">Nombre d'occupants</label>
+                            <select id="occupants" class="form-control" required>
+                                <option value="1">1 personne</option>
+                                <option value="2" selected>2 personnes</option>
+                                <option value="3">3 personnes</option>
+                                <option value="4">4 personnes</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message (optionnel)</label>
+                            <textarea id="message" class="form-control" rows="4" placeholder="Informations complémentaires..."></textarea>
+                        </div>
+                        
+                        <!-- Reservation Summary -->
+                        <div class="reservation-summary">
+                            <h4 class="summary-title">Récapitulatif</h4>
+                            <div class="summary-item">
+                                <span>Loyer mensuel</span>
+                                <span>750€</span>
+                            </div>
+                            <div class="summary-item">
+                                <span>Frais de dossier</span>
+                                <span>50€</span>
+                            </div>
+                            <div class="summary-item">
+                                <span>Caution</span>
+                                <span>750€</span>
+                            </div>
+                            <div class="summary-item summary-total">
+                                <span>Total à verser</span>
+                                <span>1550€</span>
+                            </div>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-reserve">Confirmer la réservation</button>
+                            <button type="button" class="btn btn-cancel">Annuler</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>FindHome</h3>
+                    <p>Votre partenaire de confiance pour trouver facilement où vous installer. Maisons, villas, appartements et chambres dans toute la France.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Liens rapides</h3>
+                    <ul class="footer-links">
+                        <li><a href="#home">Accueil</a></li>
+                        <li><a href="#properties">Propriétés</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#about">À propos</a></li>
+                        <li><a href="#testimonials">Témoignages</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Types de propriétés</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Maisons</a></li>
+                        <li><a href="#">Villas</a></li>
+                        <li><a href="#">Appartements</a></li>
+                        <li><a href="#">Chambres</a></li>
+                        <li><a href="#">Studios</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact</h3>
+                    <ul class="footer-contact">
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>123 Avenue de la République, 75011 Paris, France</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone"></i>
+                            <span>+33 1 23 45 67 89</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <span>contact@findhome.fr</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 FindHome. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{% static 'js/formulaire_reservation.js' %}">
+       
+    </script>
+</body>
+</html>
