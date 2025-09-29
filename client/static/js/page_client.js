@@ -129,15 +129,4 @@
             alert(`Recherche de ${propertyType} à ${location} avec un budget ${budget}`);
         });
 
-        // ===== RESERVE BUTTON FUNCTIONALITY =====
-        const reserveButtons = document.querySelectorAll('.btn-reserve');
-        
-        reserveButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                const propertyTitle = this.closest('.property-card').querySelector('.property-title').textContent;
-                const propertyPrice = this.closest('.property-card').querySelector('.property-price').textContent;
-                
-                alert(`Vous avez réservé: ${propertyTitle}\n${propertyPrice}\n\nUn agent vous contactera sous peu pour finaliser la réservation.`);
-            });
-        });
-
+   

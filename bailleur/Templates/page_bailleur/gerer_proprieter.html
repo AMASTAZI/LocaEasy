@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FindHome - Mes Propriétés</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/proprieter.css' %}">
+
+    <style>
+
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header id="header">
+        <div class="container">
+            <nav class="navbar">
+                <a href="#" class="logo">
+                    <i class="fas fa-home"></i>
+                    FindHome
+                </a>
+                <ul class="nav-links">
+                    <li><a href="{% url 'accueil' %}">Accueil</a></li>
+                    <li><a href="{% url 'accueil' %}#properties">Propriétés</a></li>
+                    <li><a href="{% url 'accueil' %}#services">Services</a></li>
+                    <li><a href="{% url 'accueil' %}#contact">Contact</a></li>
+                </ul>
+                <div class="nav-actions">
+                    <div class="user-menu">
+                        <div class="user-avatar">
+                            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Thomas Martin">
+                        </div>
+                        <span class="user-name">Thomas Martin</span>
+                        <i class="fas fa-chevron-down"></i>
+                        <div class="dropdown-menu">
+                            <a href="{% url 'page_bailleur_profile' %}"><i class="fas fa-user"></i> Mon Profil</a>
+                            <a href="#"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
+                        </div>
+                    </div>
+                    <button class="mobile-menu-btn">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Dashboard -->
+    <div class="dashboard">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <ul class="sidebar-menu">
+                <li><a href="{% url 'page_bailleur_profile' %}"><i class="fas fa-user"></i> Mon Profil</a></li>
+                <li><a href="#properties" class="active"><i class="fas fa-building"></i> Mes Propriétés</a></li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Properties Section -->
+            <div id="properties" class="dashboard-section">
+                <div class="dashboard-header">
+                    <h1>Mes Propriétés</h1>
+                    <p>Gérez vos propriétés locatives</p>
+                </div>
+
+                <div class="section">
+                    <div class="section-header">
+                        <h2 class="section-title">Liste des propriétés</h2>
+                        <button class="btn" id="addPropertyBtn"><i class="fas fa-plus"></i> Ajouter une propriété</button>
+                    </div>
+
+                    <div class="properties-grid">
+                        <!-- Property Card 1 -->
+                        <div class="property-card">
+                            <div class="property-image">
+                                <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Appartement Lyon">
+                            </div>
+                            <div class="property-info">
+                                <h3 class="property-title">Appartement T3 - Centre-ville Lyon</h3>
+                                <div class="property-location">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span>15 Rue de la République, 69001 Lyon</span>
+                                </div>
+                                <div class="property-details">
+                                    <div class="property-detail">
+                                        <i class="fas fa-bed"></i>
+                                        <span>2 chambres</span>
+                                    </div>
+                                    <div class="property-detail">
+                                        <i class="fas fa-bath"></i>
+                                        <span>1 salle de bain</span>
+                                    </div>
+                                    <div class="property-detail">
+                                        <i class="fas fa-ruler-combined"></i>
+                                        <span>65 m²</span>
+                                    </div>
+                                </div>
+                                <div class="property-price">850 €/mois</div>
+                                <div class="property-actions">
+                                    <span class="property-status status-available">Disponible</span>
+                                    <div>
+                                        <button class="btn btn-outline edit-property" data-id="1"><i class="fas fa-edit"></i> Modifier</button>
+                                        <button class="btn btn-danger delete-property" data-id="1"><i class="fas fa-trash"></i> Supprimer</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Property Card 2 -->
+                        <div class="property-card">
+                            <div class="property-image">
+                                <img src="https://images.unsplash.com/photo-1513584684374-8bab748fbf90?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Studio Villeurbanne">
+                            </div>
+                            <div class="property-info">
+                                <h3 class="property-title">Studio - Proche métro</h3>
+                                <div class="property-location">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span>25 Avenue Roger Salengro, 69100 Villeurbanne</span>
+                                </div>
+                                <div class="property-details">
+                                    <div class="property-detail">
+                                        <i class="fas fa-bed"></i>
+                                        <span>1 chambre</span>
+                                    </div>
+                                    <div class="property-detail">
+                                        <i class="fas fa-bath"></i>
+                                        <span>1 salle de bain</span>
+                                    </div>
+                                    <div class="property-detail">
+                                        <i class="fas fa-ruler-combined"></i>
+                                        <span>35 m²</span>
+                                    </div>
+                                </div>
+                                <div class="property-price">550 €/mois</div>
+                                <div class="property-actions">
+                                    <span class="property-status status-occupied">Occupé</span>
+                                    <div>
+                                        <button class="btn btn-outline edit-property" data-id="2"><i class="fas fa-edit"></i> Modifier</button>
+                                        <button class="btn btn-danger delete-property" data-id="2"><i class="fas fa-trash"></i> Supprimer</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Property Card 3 -->
+                        <div class="property-card">
+                            <div class="property-image">
+                                <img src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Maison Caluire">
+                            </div>
+                            <div class="property-info">
+                                <h3 class="property-title">Maison avec jardin - Caluire</h3>
+                                <div class="property-location">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span>8 Chemin de Montessuy, 69300 Caluire-et-Cuire</span>
+                                </div>
+                                <div class="property-details">
+                                    <div class="property-detail">
+                                        <i class="fas fa-bed"></i>
+                                        <span>4 chambres</span>
+                                    </div>
+                                    <div class="property-detail">
+                                        <i class="fas fa-bath"></i>
+                                        <span>2 salles de bain</span>
+                                    </div>
+                                    <div class="property-detail">
+                                        <i class="fas fa-ruler-combined"></i>
+                                        <span>120 m²</span>
+                                    </div>
+                                </div>
+                                <div class="property-price">1 200 €/mois</div>
+                                <div class="property-actions">
+                                    <span class="property-status status-maintenance">En maintenance</span>
+                                    <div>
+                                        <button class="btn btn-outline edit-property" data-id="3"><i class="fas fa-edit"></i> Modifier</button>
+                                        <button class="btn btn-danger delete-property" data-id="3"><i class="fas fa-trash"></i> Supprimer</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Property Modal -->
+    <div class="modal" id="addPropertyModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Ajouter une propriété</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="addPropertyForm">
+                    <div class="form-group">
+                        <label for="propertyTitle">Titre de l'annonce</label>
+                        <input type="text" id="propertyTitle" class="form-control" placeholder="Ex: Appartement T3 centre-ville">
+                    </div>
+                    <div class="form-group">
+                        <label for="propertyAddress">Adresse</label>
+                        <input type="text" id="propertyAddress" class="form-control" placeholder="Ex: 15 Rue de la République">
+                    </div>
+                    <div class="form-group">
+                        <label for="propertyCity">Ville</label>
+                        <input type="text" id="propertyCity" class="form-control" placeholder="Ex: Lyon">
+                    </div>
+                    <div class="form-group">
+                        <label for="propertyPostalCode">Code postal</label>
+                        <input type="text" id="propertyPostalCode" class="form-control" placeholder="Ex: 69001">
+                    </div>
+                    <div class="form-group">
+                        <label for="propertyType">Type de propriété</label>
+                        <select id="propertyType" class="form-control">
+                            <option value="">Sélectionnez un type</option>
+                            <option value="appartement">Appartement</option>
+                            <option value="maison">Maison</option>
+                            <option value="studio">Studio</option>
+                            <option value="loft">Loft</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="propertyRooms">Nombre de pièces</label>
+                        <input type="number" id="propertyRooms" class="form-control" min="1" placeholder="Ex: 3">
+                    </div>
+                    <div class="form-group">
+                        <label for="propertyBedrooms">Nombre de chambres</label>
+                        <input type="number" id="propertyBedrooms" class="form-control" min="0" placeholder="Ex: 2">
+                    </div>
+                    <div class="form-group">
+                        <label for="propertyBathrooms">Nombre de salles de bain</label>
+                        <input type="number" id="propertyBathrooms" class="form-control" min="1" placeholder="Ex: 1">
+                    </div>
+                    <div class="form-group">
+                        <label for="propertySurface">Surface (m²)</label>
+                        <input type="number" id="propertySurface" class="form-control" min="1" placeholder="Ex: 65">
+                    </div>
+                    <div class="form-group">
+                        <label for="propertyPrice">Prix mensuel (€)</label>
+                        <input type="number" id="propertyPrice" class="form-control" min="1" placeholder="Ex: 850">
+                    </div>
+                    <div class="form-group">
+                        <label for="propertyDescription">Description</label>
+                        <textarea id="propertyDescription" class="form-control" rows="4" placeholder="Décrivez votre propriété..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="propertyImage">Image de la propriété</label>
+                        <input type="file" id="propertyImage" class="form-control" accept="image/*">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" id="cancelAddProperty">Annuler</button>
+                <button class="btn" id="saveProperty">Enregistrer</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Property Modal -->
+    <div class="modal" id="editPropertyModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Modifier la propriété</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="editPropertyForm">
+                    <input type="hidden" id="editPropertyId">
+                    <div class="form-group">
+                        <label for="editPropertyTitle">Titre de l'annonce</label>
+                        <input type="text" id="editPropertyTitle" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="editPropertyAddress">Adresse</label>
+                        <input type="text" id="editPropertyAddress" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="editPropertyCity">Ville</label>
+                        <input type="text" id="editPropertyCity" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="editPropertyPostalCode">Code postal</label>
+                        <input type="text" id="editPropertyPostalCode" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="editPropertyType">Type de propriété</label>
+                        <select id="editPropertyType" class="form-control">
+                            <option value="appartement">Appartement</option>
+                            <option value="maison">Maison</option>
+                            <option value="studio">Studio</option>
+                            <option value="loft">Loft</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="editPropertyRooms">Nombre de pièces</label>
+                        <input type="number" id="editPropertyRooms" class="form-control" min="1">
+                    </div>
+                    <div class="form-group">
+                        <label for="editPropertyBedrooms">Nombre de chambres</label>
+                        <input type="number" id="editPropertyBedrooms" class="form-control" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="editPropertyBathrooms">Nombre de salles de bain</label>
+                        <input type="number" id="editPropertyBathrooms" class="form-control" min="1">
+                    </div>
+                    <div class="form-group">
+                        <label for="editPropertySurface">Surface (m²)</label>
+                        <input type="number" id="editPropertySurface" class="form-control" min="1">
+                    </div>
+                    <div class="form-group">
+                        <label for="editPropertyPrice">Prix mensuel (€)</label>
+                        <input type="number" id="editPropertyPrice" class="form-control" min="1">
+                    </div>
+                    <div class="form-group">
+                        <label for="editPropertyDescription">Description</label>
+                        <textarea id="editPropertyDescription" class="form-control" rows="4"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="editPropertyImage">Image de la propriété</label>
+                        <input type="file" id="editPropertyImage" class="form-control" accept="image/*">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" id="cancelEditProperty">Annuler</button>
+                <button class="btn" id="updateProperty">Mettre à jour</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Property Modal -->
+    <div class="modal" id="deletePropertyModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Supprimer la propriété</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Êtes-vous sûr de vouloir supprimer cette propriété ? Cette action est irréversible.</p>
+                <input type="hidden" id="deletePropertyId">
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" id="cancelDeleteProperty">Annuler</button>
+                <button class="btn btn-danger" id="confirmDeleteProperty">Supprimer</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'js/proprieter.js' %}">
+       
+    </script>
+</body>
+</html>

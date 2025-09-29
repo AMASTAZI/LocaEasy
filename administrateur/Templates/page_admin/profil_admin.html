@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FindHome - Administration</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/profil.css' %}">
+
+    <style>
+      
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header id="header">
+        <div class="container">
+            <nav class="navbar">
+                <a href="#" class="logo">
+                    <i class="fas fa-home"></i>
+                    FindHome
+                </a>
+                <ul class="nav-links">
+                    <li><a href="{% url 'accueil' %}">Accueil</a></li>
+                    <li><a href="{% url 'accueil' %}#properties">Propriétés</a></li>
+                    <li><a href="{% url 'accueil' %}#services">Services</a></li>
+                    <li><a href="{% url 'accueil' %}#contact">Contact</a></li>
+                </ul>
+                <div class="nav-actions">
+                    <div class="user-menu">
+                        <div class="user-avatar">
+                            <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Admin">
+                        </div>
+                        <span class="user-name">Admin</span>
+                        <i class="fas fa-chevron-down"></i>
+                        <div class="dropdown-menu">
+                            <a href="" class="active"><i class="fas fa-user-cog"></i> Profil Admin</a>
+                            <a href="#"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
+                        </div>
+                    </div>
+                    <button class="mobile-menu-btn">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Dashboard -->
+    <div class="dashboard">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <ul class="sidebar-menu">
+                <li><a href="" class="active"><i class="fas fa-user-cog"></i> Profil Admin</a></li>
+               
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Profile Section -->
+            <div class="dashboard-header">
+                <h1>Profil Administrateur</h1>
+                <p>Gérez votre compte et les paramètres de la plateforme</p>
+            </div>
+
+            <!-- Profile Header -->
+            <div class="section">
+                <div class="profile-header">
+                    <div class="profile-avatar">
+                        <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Admin">
+                    </div>
+                    <div class="profile-info">
+                        <h2>Jean Dupont</h2>
+                        <p>Administrateur système</p>
+                        <span class="badge badge-admin">Administrateur</span>
+                    </div>
+                </div>
+
+                <!-- Statistics -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value">142</div>
+                        <div class="stat-label">Utilisateurs</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">89</div>
+                        <div class="stat-label">Propriétés</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">67</div>
+                        <div class="stat-label">Contrats actifs</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">12</div>
+                        <div class="stat-label">Signalements</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profile Information -->
+            <div class="section">
+                <div class="section-header">
+                    <h2 class="section-title">Informations du profil</h2>
+                    <button class="btn" id="editProfileBtn"><i class="fas fa-edit"></i> Modifier</button>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="firstName">Prénom</label>
+                        <input type="text" id="firstName" class="form-control" value="Jean" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Nom</label>
+                        <input type="text" id="lastName" class="form-control" value="Dupont" readonly>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" class="form-control" value="jean.dupont@findhome.com" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Téléphone</label>
+                    <input type="tel" id="phone" class="form-control" value="+33 6 12 34 56 78" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="role">Rôle</label>
+                    <input type="text" id="role" class="form-control" value="Administrateur système" readonly>
+                </div>
+
+
+                   <div class="form-group">
+                    <label for="role">Mot de passe</label>
+                    <input type="password" id="role" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="bio">Bio</label>
+                    <textarea id="bio" class="form-control" rows="4" readonly>Administrateur de la plateforme FindHome avec 5 ans d'expérience dans la gestion de plateformes immobilières.</textarea>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="section">
+                <div class="section-header">
+                    <h2 class="section-title">Activité récente</h2>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Utilisateur</th>
+                                <th>Action</th>
+                                <th>Date</th>
+                                <th>Statut</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Marie Lambert</td>
+                                <td>Inscription</td>
+                                <td>15/10/2023</td>
+                                <td><span class="badge">Approuvé</span></td>
+                                <td class="action-buttons">
+                                    <button class="action-btn view"><i class="fas fa-eye"></i></button>
+                                    <button class="action-btn edit"><i class="fas fa-edit"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Appartement Lyon Centre</td>
+                                <td>Ajout propriété</td>
+                                <td>14/10/2023</td>
+                                <td><span class="badge">En attente</span></td>
+                                <td class="action-buttons">
+                                    <button class="action-btn view"><i class="fas fa-eye"></i></button>
+                                    <button class="action-btn edit"><i class="fas fa-edit"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Pierre Martin</td>
+                                <td>Signalement</td>
+                                <td>13/10/2023</td>
+                                <td><span class="badge">Traité</span></td>
+                                <td class="action-buttons">
+                                    <button class="action-btn view"><i class="fas fa-eye"></i></button>
+                                    <button class="action-btn edit"><i class="fas fa-edit"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Contrat #4587</td>
+                                <td>Résiliation</td>
+                                <td>12/10/2023</td>
+                                <td><span class="badge">En cours</span></td>
+                                <td class="action-buttons">
+                                    <button class="action-btn view"><i class="fas fa-eye"></i></button>
+                                    <button class="action-btn edit"><i class="fas fa-edit"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Profile Modal -->
+    <div class="modal" id="editProfileModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Modifier le profil</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="editProfileForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="editFirstName">Prénom</label>
+                            <input type="text" id="editFirstName" class="form-control" value="Jean">
+                        </div>
+                        <div class="form-group">
+                            <label for="editLastName">Nom</label>
+                            <input type="text" id="editLastName" class="form-control" value="Dupont">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editEmail">Email</label>
+                        <input type="email" id="editEmail" class="form-control" value="jean.dupont@findhome.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editPhone">Téléphone</label>
+                        <input type="tel" id="editPhone" class="form-control" value="+33 6 12 34 56 78">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editRole">Rôle</label>
+                        <input type="text" id="editRole" class="form-control" value="Administrateur système">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editBio">Bio</label>
+                        <textarea id="editBio" class="form-control" rows="4">Administrateur de la plateforme FindHome avec 5 ans d'expérience dans la gestion de plateformes immobilières.</textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="profileImage">Photo de profil</label>
+                        <input type="file" id="profileImage" class="form-control" accept="image/*">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" id="cancelEditProfile">Annuler</button>
+                <button class="btn" id="saveProfile">Enregistrer</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'js/profil.js' %}">
+       
+    </script>
+</body>
+</html>

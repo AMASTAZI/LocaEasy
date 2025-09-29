@@ -74,7 +74,7 @@
                 <!-- Reservation Form -->
                 <div class="reservation-form-container">
                     <h3 class="form-title">Détails de réservation</h3>
-                    <form class="reservation-form" id="reservationForm">
+                    <form class="reservation-form" id="reservationForm" actions="{% url 'contrat_de_bail' %}">
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="first-name">Prénom</label>
@@ -139,6 +139,7 @@
                         </div>
                         
                         <div class="form-actions">
+                            <a href = "{% url 'contrat_de_bail' %}" class="btn btn-reserve">Test front</a>
                             <button type="submit" class="btn btn-reserve">Confirmer la réservation</button>
                             <button type="button" class="btn btn-cancel">Annuler</button>
                         </div>

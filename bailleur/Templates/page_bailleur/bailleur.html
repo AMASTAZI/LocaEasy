@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FindHome - Dashboard Bailleur</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/bailleur.css' %}">
+
+    <style>
+
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header id="header">
+        <div class="container">
+            <nav class="navbar">
+                <a href="#" class="logo">
+                    <i class="fas fa-home"></i>
+                    FindHome
+                </a>
+                <ul class="nav-links">
+                    <li><a href="{% url 'accueil' %}">Accueil</a></li>
+                    <li><a href="{% url 'accueil' %}#properties">Propriétés</a></li>
+                    <li><a href="{% url 'accueil' %}#services">Services</a></li>
+                    <li><a href="{% url 'accueil' %}#contact">Contact</a></li>
+                </ul>
+                <div class="nav-actions">
+                    <div class="user-menu">
+                        <div class="user-avatar">
+                            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Thomas Martin">
+                        </div>
+                        <span class="user-name">Thomas Martin</span>
+                        <i class="fas fa-chevron-down"></i>
+                        <div class="dropdown-menu">
+                            <a href="{% url 'page_bailleur_profile' %}"><i class="fas fa-user"></i> Mon Profil</a>
+                            <a href="#properties"><i class="fas fa-building"></i> Mes Propriétés</a>
+                            <a href="#tenants"><i class="fas fa-users"></i> Mes Locataires</a>
+                            <a href="#payments"><i class="fas fa-credit-card"></i> Paiements</a>
+                            <a href="#"><i class="fas fa-cog"></i> Paramètres</a>
+                            <a href="#"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
+                        </div>
+                    </div>
+                    <button class="mobile-menu-btn">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Dashboard -->
+    <div class="dashboard">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <ul class="sidebar-menu">
+                <li><a href="#overview" class="active"><i class="fas fa-tachometer-alt"></i> Tableau de bord</a></li>
+                <li><a href="#properties"><i class="fas fa-building"></i> Mes Propriétés</a></li>
+                <li><a href="#tenants"><i class="fas fa-users"></i> Mes Locataires</a></li>
+                <li><a href="#payments"><i class="fas fa-credit-card"></i> Paiements</a></li>
+                <li><a href="#contracts"><i class="fas fa-file-contract"></i> Contrats</a></li>
+                <li><a href="#maintenance"><i class="fas fa-tools"></i> Maintenance</a></li>
+                <li><a href="#profile"><i class="fas fa-user"></i> Mon Profil</a></li>
+                <li><a href="#settings"><i class="fas fa-cog"></i> Paramètres</a></li>
+                <li><a href="#settings"><i class="fas fa-cog"></i> se deconnecter</a></li>
+
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Dashboard Overview -->
+            <div id="overview" class="dashboard-section">
+                <div class="dashboard-header">
+                    <h1>Tableau de bord Bailleur</h1>
+                    <p>Bienvenue dans votre espace gestionnaire, Thomas</p>
+                </div>
+
+                <!-- Dashboard Cards -->
+                <div class="dashboard-cards">
+                    <div class="card">
+                        <div class="card-icon properties">
+                            <i class="fas fa-building"></i>
+                        </div>
+                        <h3>8</h3>
+                        <p>Propriétés gérées</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon clients">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3>12</h3>
+                        <p>Locataires actifs</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon payments">
+                            <i class="fas fa-credit-card"></i>
+                        </div>
+                        <h3>7 850€</h3>
+                        <p>Revenus ce mois-ci</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon income">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3>94 200€</h3>
+                        <p>Revenus annuels</p>
+                    </div>
+                </div>
+
+                <!-- Mes Propriétés -->
+                <div class="section">
+                    <div class="section-header">
+                        <h2 class="section-title">Mes Propriétés</h2>
+                    <a href="{% url 'gerer_proprieter' %}" class="btn">Gérer les propriétés</a>
+                    </div>
+                    <div class="property-cards">
+                        <div class="property-card">
+                            <div class="property-image">
+                                <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Appartement moderne centre-ville">
+                            </div>
+                            <div class="property-details">
+                                <h3 class="property-title">Appartement moderne centre-ville</h3>
+                                <div class="property-location">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span>Lyon 1er</span>
+                                </div>
+                                <div class="property-info">
+                                    <span>3 pièces</span>
+                                    <span>65 m²</span>
+                                    <span class="status occupied">Occupé</span>
+                                </div>
+                                <div class="property-price">750€/mois</div>
+                                <div class="property-actions">
+                                    <button class="action-btn"><i class="fas fa-eye"></i> Détails</button>
+                                    <button class="action-btn"><i class="fas fa-edit"></i> Modifier</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="property-card">
+                            <div class="property-image">
+                                <img src="https://images.unsplash.com/photo-1518780664697-55e3ad937233?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Maison familiale spacieuse">
+                            </div>
+                            <div class="property-details">
+                                <h3 class="property-title">Maison familiale spacieuse</h3>
+                                <div class="property-location">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span>Villeurbanne</span>
+                                </div>
+                                <div class="property-info">
+                                    <span>5 pièces</span>
+                                    <span>120 m²</span>
+                                    <span class="status occupied">Occupé</span>
+                                </div>
+                                <div class="property-price">1200€/mois</div>
+                                <div class="property-actions">
+                                    <button class="action-btn"><i class="fas fa-eye"></i> Détails</button>
+                                    <button class="action-btn"><i class="fas fa-edit"></i> Modifier</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="property-card">
+                            <div class="property-image">
+                                <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Studio étudiant proche université">
+                            </div>
+                            <div class="property-details">
+                                <h3 class="property-title">Studio étudiant proche université</h3>
+                                <div class="property-location">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span>Lyon 7ème</span>
+                                </div>
+                                <div class="property-info">
+                                    <span>1 pièce</span>
+                                    <span>25 m²</span>
+                                    <span class="status vacant">Vacant</span>
+                                </div>
+                                <div class="property-price">450€/mois</div>
+                                <div class="property-actions">
+                                    <button class="action-btn"><i class="fas fa-eye"></i> Détails</button>
+                                    <button class="action-btn"><i class="fas fa-edit"></i> Modifier</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Paiements récents -->
+                <div class="section">
+                    <div class="section-header">
+                        <h2 class="section-title">Paiements récents</h2>
+                        <a href="#payments" class="btn">Voir tout</a>
+                    </div>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Locataire</th>
+                                    <th>Propriété</th>
+                                    <th>Date d'échéance</th>
+                                    <th>Montant</th>
+                                    <th>Statut</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Pierre Dubois</td>
+                                    <td>Appartement moderne centre-ville</td>
+                                    <td>01/10/2023</td>
+                                    <td>750€</td>
+                                    <td><span class="status paid">Payé</span></td>
+                                    <td>
+                                        <button class="action-btn"><i class="fas fa-eye"></i></button>
+                                        <button class="action-btn"><i class="fas fa-file-invoice"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Marie Lambert</td>
+                                    <td>Maison familiale spacieuse</td>
+                                    <td>01/10/2023</td>
+                                    <td>1200€</td>
+                                    <td><span class="status pending">En attente</span></td>
+                                    <td>
+                                        <button class="action-btn"><i class="fas fa-eye"></i></button>
+                                        <button class="action-btn"><i class="fas fa-bell"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Sophie Martin</td>
+                                    <td>Appartement T2 Lyon 3ème</td>
+                                    <td>01/10/2023</td>
+                                    <td>650€</td>
+                                    <td><span class="status paid">Payé</span></td>
+                                    <td>
+                                        <button class="action-btn"><i class="fas fa-eye"></i></button>
+                                        <button class="action-btn"><i class="fas fa-file-invoice"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Propriétés Section -->
+            <div id="properties" class="dashboard-section" style="display: none;">
+                <div class="dashboard-header">
+                    <h1>Gestion des Propriétés</h1>
+                    <p>Gérez votre portefeuille immobilier</p>
+                </div>
+
+                <div class="section">
+                    <div class="section-header">
+                        <h2 class="section-title">Toutes mes propriétés</h2>
+                        <button class="btn">Ajouter une propriété</button>
+                    </div>
+                    
+                    <div class="property-cards">
+                        <!-- Les cartes de propriétés seront générées dynamiquement ici -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Locataires Section -->
+            <div id="tenants" class="dashboard-section" style="display: none;">
+                <div class="dashboard-header">
+                    <h1>Gestion des Locataires</h1>
+                    <p>Gérez vos relations avec vos locataires</p>
+                </div>
+
+                <div class="section">
+                    <div class="section-header">
+                        <h2 class="section-title">Mes locataires</h2>
+                        <button class="btn">Ajouter un locataire</button>
+                    </div>
+                    
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Nom</th>
+                                    <th>Email</th>
+                                    <th>Téléphone</th>
+                                    <th>Propriété</th>
+                                    <th>Loyer</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Pierre Dubois</td>
+                                    <td>pierre.dubois@example.com</td>
+                                    <td>06 12 34 56 78</td>
+                                    <td>Appartement moderne centre-ville</td>
+                                    <td>750€</td>
+                                    <td>
+                                        <button class="action-btn"><i class="fas fa-eye"></i></button>
+                                        <button class="action-btn"><i class="fas fa-edit"></i></button>
+                                        <button class="action-btn"><i class="fas fa-envelope"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Marie Lambert</td>
+                                    <td>marie.lambert@example.com</td>
+                                    <td>06 23 45 67 89</td>
+                                    <td>Maison familiale spacieuse</td>
+                                    <td>1200€</td>
+                                    <td>
+                                        <button class="action-btn"><i class="fas fa-eye"></i></button>
+                                        <button class="action-btn"><i class="fas fa-edit"></i></button>
+                                        <button class="action-btn"><i class="fas fa-envelope"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Sophie Martin</td>
+                                    <td>sophie.martin@example.com</td>
+                                    <td>06 34 56 78 90</td>
+                                    <td>Appartement T2 Lyon 3ème</td>
+                                    <td>650€</td>
+                                    <td>
+                                        <button class="action-btn"><i class="fas fa-eye"></i></button>
+                                        <button class="action-btn"><i class="fas fa-edit"></i></button>
+                                        <button class="action-btn"><i class="fas fa-envelope"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Paiements Section -->
+            <div id="payments" class="dashboard-section" style="display: none;">
+                <div class="dashboard-header">
+                    <h1>Gestion des Paiements</h1>
+                    <p>Suivez les loyers et paiements de vos locataires</p>
+                </div>
+
+                <div class="section">
+                    <div class="section-header">
+                        <h2 class="section-title">Historique des paiements</h2>
+                        <button class="btn">Exporter les données</button>
+                    </div>
+                    
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Locataire</th>
+                                    <th>Propriété</th>
+                                    <th>Montant</th>
+                                    <th>Méthode</th>
+                                    <th>Statut</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>01/09/2023</td>
+                                    <td>Pierre Dubois</td>
+                                    <td>Appartement moderne centre-ville</td>
+                                    <td>750€</td>
+                                    <td>Virement</td>
+                                    <td><span class="status paid">Payé</span></td>
+                                    <td>
+                                        <button class="action-btn"><i class="fas fa-eye"></i></button>
+                                        <button class="action-btn"><i class="fas fa-file-invoice"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>01/09/2023</td>
+                                    <td>Marie Lambert</td>
+                                    <td>Maison familiale spacieuse</td>
+                                    <td>1200€</td>
+                                    <td>Chèque</td>
+                                    <td><span class="status paid">Payé</span></td>
+                                    <td>
+                                        <button class="action-btn"><i class="fas fa-eye"></i></button>
+                                        <button class="action-btn"><i class="fas fa-file-invoice"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>01/09/2023</td>
+                                    <td>Sophie Martin</td>
+                                    <td>Appartement T2 Lyon 3ème</td>
+                                    <td>650€</td>
+                                    <td>Prélèvement</td>
+                                    <td><span class="status paid">Payé</span></td>
+                                    <td>
+                                        <button class="action-btn"><i class="fas fa-eye"></i></button>
+                                        <button class="action-btn"><i class="fas fa-file-invoice"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>01/10/2023</td>
+                                    <td>Pierre Dubois</td>
+                                    <td>Appartement moderne centre-ville</td>
+                                    <td>750€</td>
+                                    <td>Virement</td>
+                                    <td><span class="status paid">Payé</span></td>
+                                    <td>
+                                        <button class="action-btn"><i class="fas fa-eye"></i></button>
+                                        <button class="action-btn"><i class="fas fa-file-invoice"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>01/10/2023</td>
+                                    <td>Marie Lambert</td>
+                                    <td>Maison familiale spacieuse</td>
+                                    <td>1200€</td>
+                                    <td>Chèque</td>
+                                    <td><span class="status pending">En attente</span></td>
+                                    <td>
+                                        <button class="action-btn"><i class="fas fa-eye"></i></button>
+                                        <button class="action-btn"><i class="fas fa-bell"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'js/bailleur.js' %}">
+      
+    </script>
+</body>
+</html>

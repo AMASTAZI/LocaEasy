@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FindHome - Profil Bailleur</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Variables CSS */
+        :root {
+            --primary-color: #3a86ff;
+            --secondary-color: #8338ec;
+            --success-color: #06d6a0;
+            --warning-color: #ffd166;
+            --danger-color: #ef476f;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --gray-color: #6c757d;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        /* Reset et styles de base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark-color);
+            background-color: #f5f7fa;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Header */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .logo i {
+            margin-right: 8px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 25px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark-color);
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 10px;
+            border: 2px solid var(--primary-color);
+        }
+
+        .user-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .user-name {
+            font-weight: 500;
+            margin-right: 10px;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            box-shadow: var(--box-shadow);
+            border-radius: var(--border-radius);
+            padding: 10px 0;
+            min-width: 200px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: var(--transition);
+            z-index: 100;
+        }
+
+        .user-menu:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 10px 20px;
+            text-decoration: none;
+            color: var(--dark-color);
+            transition: var(--transition);
+        }
+
+        .dropdown-menu a:hover {
+            background-color: var(--light-color);
+            color: var(--primary-color);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: var(--dark-color);
+        }
+
+        /* Dashboard Layout */
+        .dashboard {
+            display: flex;
+            min-height: calc(100vh - 80px);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            background: white;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
+            padding: 20px 0;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 5px;
+        }
+
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            text-decoration: none;
+            color: var(--dark-color);
+            transition: var(--transition);
+        }
+
+        .sidebar-menu a i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+
+        .sidebar-menu a:hover {
+            background-color: rgba(58, 134, 255, 0.1);
+            color: var(--primary-color);
+        }
+
+        .sidebar-menu a.active {
+            background-color: rgba(58, 134, 255, 0.1);
+            color: var(--primary-color);
+            border-right: 3px solid var(--primary-color);
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 30px;
+        }
+
+        .dashboard-header {
+            margin-bottom: 30px;
+        }
+
+        .dashboard-header h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: var(--dark-color);
+        }
+
+        .dashboard-header p {
+            color: var(--gray-color);
+        }
+
+        /* Section Styles */
+        .section {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            color: var(--dark-color);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn:hover {
+            background-color: #2a75e6;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: #7229d6;
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .btn-outline:hover {
+            background-color: rgba(58, 134, 255, 0.1);
+        }
+
+        /* Profile Form */
+        .profile-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark-color);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(58, 134, 255, 0.2);
+        }
+
+        .profile-picture {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .profile-picture img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 20px;
+            border: 3px solid var(--primary-color);
+        }
+
+        .profile-picture-actions {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .profile-picture-actions .btn {
+            margin-bottom: 10px;
+        }
+
+        /* Profile Section Styles */
+        .profile-section {
+            display: none;
+        }
+
+        .profile-section.active {
+            display: block;
+        }
+
+        .profile-tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 20px;
+        }
+
+        .profile-tab {
+            padding: 12px 20px;
+            background: none;
+            border: none;
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--gray-color);
+            cursor: pointer;
+            transition: var(--transition);
+            border-bottom: 3px solid transparent;
+        }
+
+        .profile-tab.active {
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
+        }
+
+        .profile-tab:hover {
+            color: var(--primary-color);
+        }
+
+        .security-settings {
+            max-width: 600px;
+        }
+
+        .password-strength {
+            height: 5px;
+            background-color: #eee;
+            border-radius: 5px;
+            margin-top: 5px;
+            overflow: hidden;
+        }
+
+        .password-strength-meter {
+            height: 100%;
+            width: 0;
+            transition: var(--transition);
+        }
+
+        .password-strength.weak .password-strength-meter {
+            width: 30%;
+            background-color: var(--danger-color);
+        }
+
+        .password-strength.medium .password-strength-meter {
+            width: 60%;
+            background-color: var(--warning-color);
+        }
+
+        .password-strength.strong .password-strength-meter {
+            width: 100%;
+            background-color: var(--success-color);
+        }
+
+        .notification-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .notification-item:last-child {
+            border-bottom: none;
+        }
+
+        .notification-info h4 {
+            margin-bottom: 5px;
+        }
+
+        .notification-info p {
+            color: var(--gray-color);
+            font-size: 0.9rem;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: var(--transition);
+            border-radius: 24px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: var(--transition);
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--primary-color);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .dashboard {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                padding: 10px 0;
+            }
+            
+            .sidebar-menu {
+                display: flex;
+                overflow-x: auto;
+            }
+            
+            .sidebar-menu li {
+                margin-bottom: 0;
+                margin-right: 10px;
+            }
+            
+            .sidebar-menu a {
+                white-space: nowrap;
+                border-right: none;
+                border-bottom: 3px solid transparent;
+            }
+            
+            .sidebar-menu a.active {
+                border-right: none;
+                border-bottom: 3px solid var(--primary-color);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .profile-form {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-tabs {
+                flex-direction: column;
+            }
+
+            .profile-tab {
+                border-bottom: none;
+                border-left: 3px solid transparent;
+            }
+
+            .profile-tab.active {
+                border-left-color: var(--primary-color);
+                border-bottom-color: transparent;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .user-name {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header id="header">
+        <div class="container">
+            <nav class="navbar">
+                <a href="#" class="logo">
+                    <i class="fas fa-home"></i>
+                    FindHome
+                </a>
+                <ul class="nav-links">
+                    <li><a href="{% url 'accueil' %}">Accueil</a></li>
+                    <li><a href="{% url 'accueil' %}#properties">Propriétés</a></li>
+                    <li><a href="{% url 'accueil' %}#services">Services</a></li>
+                    <li><a href="{% url 'accueil' %}#contact">Contact</a></li>
+                </ul>
+                <div class="nav-actions">
+                    <div class="user-menu">
+                        <div class="user-avatar">
+                            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Thomas Martin">
+                        </div>
+                        <span class="user-name">Thomas Martin</span>
+                        <i class="fas fa-chevron-down"></i>
+                        <div class="dropdown-menu">
+                            <a href="#profile"><i class="fas fa-user"></i> Mon Profil</a>
+                            <a href="#"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
+                        </div>
+                    </div>
+                    <button class="mobile-menu-btn">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Dashboard -->
+    <div class="dashboard">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <ul class="sidebar-menu">
+                <li><a href="#profile" class="active"><i class="fas fa-user"></i> Mon Profil</a></li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Profile Section -->
+            <div id="profile" class="dashboard-section">
+                <div class="dashboard-header">
+                    <h1>Mon Profil</h1>
+                    <p>Gérez vos informations personnelles et vos préférences</p>
+                </div>
+
+                <div class="profile-tabs">
+                    <button class="profile-tab active" data-tab="personal">Informations personnelles</button>
+                    <button class="profile-tab" data-tab="security">Sécurité</button>
+                    <button class="profile-tab" data-tab="notifications">Notifications</button>
+                </div>
+
+                <!-- Informations personnelles -->
+                <div id="personal-tab" class="profile-section active">
+                    <div class="section">
+                        <div class="section-header">
+                            <h2 class="section-title">Informations personnelles</h2>
+                        </div>
+
+                        <div class="profile-picture">
+                            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Thomas Martin">
+                            <div class="profile-picture-actions">
+                                <button class="btn btn-outline"><i class="fas fa-camera"></i> Changer la photo</button>
+                                <button class="btn btn-outline"><i class="fas fa-trash"></i> Supprimer</button>
+                            </div>
+                        </div>
+
+                        <form class="profile-form">
+                            <div class="form-group">
+                                <label for="firstName">Prénom</label>
+                                <input type="text" id="firstName" class="form-control" value="Thomas">
+                            </div>
+                            <div class="form-group">
+                                <label for="lastName">Nom</label>
+                                <input type="text" id="lastName" class="form-control" value="Martin">
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Adresse email</label>
+                                <input type="email" id="email" class="form-control" value="thomas.martin@example.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Téléphone</label>
+                                <input type="tel" id="phone" class="form-control" value="06 12 34 56 78">
+                            </div>
+                            <div class="form-group">
+                                <label for="address">Adresse</label>
+                                <input type="text" id="address" class="form-control" value="15 Rue de la République">
+                            </div>
+                            <div class="form-group">
+                                <label for="city">Ville</label>
+                                <input type="text" id="city" class="form-control" value="Lyon">
+                            </div>
+                            <div class="form-group">
+                                <label for="postalCode">Code postal</label>
+                                <input type="text" id="postalCode" class="form-control" value="69001">
+                            </div>
+                            <div class="form-group">
+                                <label for="country">Pays</label>
+                                <input type="text" id="country" class="form-control" value="France">
+                            </div>
+                            <div class="form-group full-width">
+                                <label for="bio">À propos de moi</label>
+                                <textarea id="bio" class="form-control" rows="4">Je suis propriétaire bailleur depuis 5 ans et je gère actuellement 8 propriétés dans la région lyonnaise.</textarea>
+                            </div>
+                            <div class="form-group full-width">
+                                <button type="submit" class="btn">Enregistrer les modifications</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Sécurité -->
+                <div id="security-tab" class="profile-section">
+                    <div class="section">
+                        <div class="section-header">
+                            <h2 class="section-title">Sécurité du compte</h2>
+                        </div>
+
+                        <div class="security-settings">
+                            <div class="form-group">
+                                <label for="currentPassword">Mot de passe actuel</label>
+                                <input type="password" id="currentPassword" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="newPassword">Nouveau mot de passe</label>
+                                <input type="password" id="newPassword" class="form-control">
+                                <div class="password-strength" id="passwordStrength">
+                                    <div class="password-strength-meter"></div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="confirmPassword">Confirmer le nouveau mot de passe</label>
+                                <input type="password" id="confirmPassword" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <button type="button" class="btn">Mettre à jour le mot de passe</button>
+                            </div>
+                        </div>
+
+                        <div class="section-header" style="margin-top: 30px;">
+                            <h2 class="section-title">Sessions actives</h2>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Appareil</th>
+                                        <th>Localisation</th>
+                                        <th>Dernière activité</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Chrome sur Windows</td>
+                                        <td>Lyon, France</td>
+                                        <td>À l'instant</td>
+                                        <td><button class="action-btn"><i class="fas fa-times"></i> Déconnecter</button></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Safari sur iPhone</td>
+                                        <td>Lyon, France</td>
+                                        <td>Il y a 2 heures</td>
+                                        <td><button class="action-btn"><i class="fas fa-times"></i> Déconnecter</button></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Firefox sur Mac</td>
+                                        <td>Paris, France</td>
+                                        <td>Il y a 3 jours</td>
+                                        <td><button class="action-btn"><i class="fas fa-times"></i> Déconnecter</button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Notifications -->
+                <div id="notifications-tab" class="profile-section">
+                    <div class="section">
+                        <div class="section-header">
+                            <h2 class="section-title">Préférences de notifications</h2>
+                        </div>
+
+                        <div class="notification-item">
+                            <div class="notification-info">
+                                <h4>Nouveaux messages</h4>
+                                <p>Recevoir des notifications pour les nouveaux messages des locataires</p>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+
+                        <div class="notification-item">
+                            <div class="notification-info">
+                                <h4>Paiements en attente</h4>
+                                <p>Recevoir des rappels pour les loyers en attente de paiement</p>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+
+                        <div class="notification-item">
+                            <div class="notification-info">
+                                <h4>Demandes de maintenance</h4>
+                                <p>Être notifié des nouvelles demandes de maintenance</p>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+
+                        <div class="notification-item">
+                            <div class="notification-info">
+                                <h4>Rapports mensuels</h4>
+                                <p>Recevoir des rapports mensuels sur l'état de vos propriétés</p>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+
+                        <div class="notification-item">
+                            <div class="notification-info">
+                                <h4>Offres et promotions</h4>
+                                <p>Recevoir des offres spéciales et des promotions de nos partenaires</p>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+
+                        <div class="form-group full-width" style="margin-top: 30px;">
+                            <button type="button" class="btn">Enregistrer les préférences</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Gestion des onglets du profil
+        document.addEventListener('DOMContentLoaded', function() {
+            const profileTabs = document.querySelectorAll('.profile-tab');
+            const profileSections = document.querySelectorAll('.profile-section');
+
+            profileTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // Retirer la classe active de tous les onglets et sections
+                    profileTabs.forEach(t => t.classList.remove('active'));
+                    profileSections.forEach(s => s.classList.remove('active'));
+                    
+                    // Ajouter la classe active à l'onglet cliqué
+                    this.classList.add('active');
+                    
+                    // Afficher la section correspondante
+                    const tabId = this.getAttribute('data-tab');
+                    const targetSection = document.getElementById(`${tabId}-tab`);
+                    if (targetSection) {
+                        targetSection.classList.add('active');
+                    }
+                });
+            });
+
+            // Indicateur de force du mot de passe
+            const newPasswordInput = document.getElementById('newPassword');
+            const passwordStrength = document.getElementById('passwordStrength');
+
+            newPasswordInput.addEventListener('input', function() {
+                const password = this.value;
+                let strength = 0;
+
+                if (password.length >= 8) strength++;
+                if (password.match(/[a-z]/) && password.match(/[A-Z]/)) strength++;
+                if (password.match(/\d/)) strength++;
+                if (password.match(/[^a-zA-Z\d]/)) strength++;
+
+                passwordStrength.className = 'password-strength';
+                if (password.length > 0) {
+                    if (strength <= 2) {
+                        passwordStrength.classList.add('weak');
+                    } else if (strength === 3) {
+                        passwordStrength.classList.add('medium');
+                    } else {
+                        passwordStrength.classList.add('strong');
+                    }
+                }
+            });
+
+            // Gestion du menu déroulant utilisateur
+            const userMenu = document.querySelector('.user-menu');
+            const dropdownMenu = document.querySelector('.dropdown-menu');
+            
+            userMenu.addEventListener('click', function(e) {
+                e.stopPropagation();
+                dropdownMenu.classList.toggle('show');
+            });
+            
+            // Fermer le menu déroulant en cliquant ailleurs
+            document.addEventListener('click', function() {
+                dropdownMenu.classList.remove('show');
+            });
+        });
+    </script>
+</body>
+</html>
