@@ -76,28 +76,38 @@
         emailInput.addEventListener('blur', validateEmail);
         passwordInput.addEventListener('blur', validatePassword);
         
-        // Form submission
-        loginForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            const isEmailValid = validateEmail();
-            const isPasswordValid = validatePassword();
-            
-            if (isEmailValid && isPasswordValid) {
-                // In a real application, you would submit the form here
-                alert('Connexion réussie ! Redirection vers votre tableau de bord...');
-                loginForm.reset();
-                
-                // Remove success classes
-                const inputs = loginForm.querySelectorAll('.form-control');
-                inputs.forEach(input => {
-                    input.classList.remove('success');
-                });
-                
-                // In a real app, you would redirect to dashboard
-                // window.location.href = 'dashboard.html';
-            }
+       // Form submission
+    loginForm.addEventListener('submit', (e) => {
+    e.preventDefault(); // Empêche la soumission traditionnelle du formulaire
+    
+    const isEmailValid = validateEmail();
+    const isPasswordValid = validatePassword();
+    
+    if (isEmailValid && isPasswordValid) {
+        // Action après validation
+        alert('Operation en cours..........');
+        loginForm.submit(); // Cela soumet réellement le formulaire
+        
+        // Réinitialiser le formulaire
+        loginForm.reset();
+        
+        // Supprimer les classes de succès
+        const inputs = loginForm.querySelectorAll('.form-control');
+        inputs.forEach(input => {
+            input.classList.remove('success');
         });
+        
+        // Soumettre le formulaire de manière programmatique
+
+        
+        // Si tu veux ajouter une redirection après soumission
+        // window.location.href = 'dashboard.html'; // Décommente cette ligne pour rediriger
+    } else {
+        // Si la validation échoue, afficher un message d'erreur
+        alert('Veuillez vérifier vos informations de connexion.');
+    }
+});
+
 
         // Social login buttons
         document.querySelector('.social-btn.google').addEventListener('click', () => {

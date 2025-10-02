@@ -177,35 +177,31 @@
         confirmPasswordInput.addEventListener('blur', validateConfirmPassword);
         conditionsInput.addEventListener('change', validateConditions);
         
-        // Form submission
-        registrationForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            const isNomValid = validateNom();
-            const isPrenomValid = validatePrenom();
-            const isAdresseValid = validateAdresse();
-            const isAgeValid = validateAge();
-            const isTelephoneValid = validateTelephone();
-            const isEmailValid = validateEmail();
-            const isPasswordValid = validatePassword();
-            const isConfirmPasswordValid = validateConfirmPassword();
-            const isConditionsValid = validateConditions();
-            
-            if (isNomValid && isPrenomValid && isAdresseValid && isAgeValid && 
-                isTelephoneValid && isEmailValid && isPasswordValid && 
-                isConfirmPasswordValid && isConditionsValid) {
-                
-                // In a real application, you would submit the form here
-                alert('Inscription réussie ! Vous pouvez maintenant vous connecter.');
-                registrationForm.reset();
-                
-                // Remove success classes
-                const inputs = registrationForm.querySelectorAll('.form-control');
-                inputs.forEach(input => {
-                    input.classList.remove('success');
-                });
-            }
-        });
+// Form submission
+registrationForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    
+    const isNomValid = validateNom();
+    const isPrenomValid = validatePrenom();
+    const isAdresseValid = validateAdresse();
+    const isAgeValid = validateAge();
+    const isTelephoneValid = validateTelephone();
+    const isEmailValid = validateEmail();
+    const isPasswordValid = validatePassword();
+    const isConfirmPasswordValid = validateConfirmPassword();
+    const isConditionsValid = validateConditions();
+    
+    if (isNomValid && isPrenomValid && isAdresseValid && isAgeValid && 
+        isTelephoneValid && isEmailValid && isPasswordValid && 
+        isConfirmPasswordValid && isConditionsValid) {
+        
+        // ✅ Déclencher l'action normale du formulaire
+        registrationForm.submit(); // Soumet le formulaire normalement
+        // OU
+        registrationForm.removeEventListener('submit', arguments.callee); // Retire l'écouteur
+        registrationForm.submit(); // Et soumet à nouveau
+    }
+});
 
         // ===== SMOOTH SCROLLING FOR ANCHOR LINKS =====
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {

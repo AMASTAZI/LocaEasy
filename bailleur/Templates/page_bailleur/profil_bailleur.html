@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FindHome - Profil Bailleur</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/messages.css' %}">
+
     <style>
         /* Variables CSS */
         :root {
@@ -565,7 +567,7 @@
             <nav class="navbar">
                 <a href="#" class="logo">
                     <i class="fas fa-home"></i>
-                    FindHome
+                    LocalEasy
                 </a>
                 <ul class="nav-links">
                     <li><a href="{% url 'accueil' %}">Accueil</a></li>
@@ -573,6 +575,17 @@
                     <li><a href="{% url 'accueil' %}#services">Services</a></li>
                     <li><a href="{% url 'accueil' %}#contact">Contact</a></li>
                 </ul>
+
+                                {% if messages %}
+                <div class="messages">
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }} auto-hide">
+                            {{ message }}
+                            <button class="alert-close" onclick="this.parentElement.remove()">×</button>
+                        </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
                 <div class="nav-actions">
                     <div class="user-menu">
                         <div class="user-avatar">

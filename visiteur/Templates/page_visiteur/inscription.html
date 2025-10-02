@@ -4,9 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inscription - FindHome</title>
+    <title>Inscription - LocalEasy</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="{% static 'css/inscription.css' %}">
+    <link rel="stylesheet" href="{% static 'css/messages.css' %}">
+
 </head>
 <body>
     <!-- Header -->
@@ -15,7 +17,7 @@
             <nav class="navbar">
                 <a href="index.html" class="logo">
                     <i class="fas fa-home"></i>
-                    FindHome
+                    LocalEasy
                 </a>
                 <ul class="nav-links">
                     <li><a href="{% url 'accueil' %}">Accueil</a></li>
@@ -38,78 +40,89 @@
                     <h2>Créer un compte</h2>
                     <p>Rejoignez FindHome et trouvez facilement où vous installer</p>
                 </div>
-                <form class="registration-form" id="registrationForm">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="nom">Nom *</label>
-                            <input type="text" id="nom" class="form-control" placeholder="Votre nom" required>
-                            <div class="error-message" id="nomError">Veuillez entrer votre nom</div>
-                        </div>
-                        <div class="form-group">
-                            <label for="prenom">Prénom *</label>
-                            <input type="text" id="prenom" class="form-control" placeholder="Votre prénom" required>
-                            <div class="error-message" id="prenomError">Veuillez entrer votre prénom</div>
-                        </div>
+       <form class="registration-form" id="registrationForm" method="POST" action="{% url 'inscription_utilisateur' %}">
+            {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} auto-hide">
+                        {{ message }}
+                        <button class="alert-close" onclick="this.parentElement.remove()">×</button>
+                    </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+                {% csrf_token %}
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="nom">Nom *</label>
+                        <input type="text" id="nom" name="nom" class="form-control" placeholder="Votre nom" required>
+                        <div class="error-message" id="nomError">Veuillez entrer votre nom</div>
                     </div>
                     <div class="form-group">
-                        <label for="adresse">Adresse *</label>
-                        <input type="text" id="adresse" class="form-control" placeholder="Votre adresse complète" required>
-                        <div class="error-message" id="adresseError">Veuillez entrer votre adresse</div>
+                        <label for="prenom">Prénom *</label>
+                        <input type="text" id="prenom" name="prenom" class="form-control" placeholder="Votre prénom" required>
+                        <div class="error-message" id="prenomError">Veuillez entrer votre prénom</div>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="age">Âge *</label>
-                            <input type="number" id="age" class="form-control" placeholder="Votre âge" min="18" required>
-                            <div class="error-message" id="ageError">Vous devez avoir au moins 18 ans</div>
-                        </div>
-                        <div class="form-group">
-                            <label for="telephone">Numéro de téléphone *</label>
-                            <input type="tel" id="telephone" class="form-control" placeholder="Ex: +237 6XX XX XX XX" required>
-                            <div class="error-message" id="telephoneError">Veuillez entrer un numéro valide</div>
-                        </div>
+                </div>
+                <div class="form-group">
+                    <label for="adresse">Adresse *</label>
+                    <input type="text" id="adresse" name="adresse" class="form-control" placeholder="Votre adresse complète" required>
+                    <div class="error-message" id="adresseError">Veuillez entrer votre adresse</div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="age">Âge *</label>
+                        <input type="number" id="age" name="age" class="form-control" placeholder="Votre âge" min="18" required>
+                        <div class="error-message" id="ageError">Vous devez avoir au moins 18 ans</div>
                     </div>
                     <div class="form-group">
-                        <label for="email">Email *</label>
-                        <input type="email" id="email" class="form-control" placeholder="votre@email.com" required>
-                        <div class="error-message" id="emailError">Veuillez entrer un email valide</div>
+                        <label for="telephone">Numéro de téléphone *</label>
+                        <input type="tel" id="telephone" name="telephone" class="form-control" placeholder="Ex: +237 6XX XX XX XX" required>
+                        <div class="error-message" id="telephoneError">Veuillez entrer un numéro valide</div>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="password">Mot de passe *</label>
-                            <input type="password" id="password" class="form-control" placeholder="Votre mot de passe" required>
-                            <div class="error-message" id="passwordError">Le mot de passe doit contenir au moins 8 caractères</div>
-                        </div>
-                        <div class="form-group">
-                            <label for="confirmPassword">Confirmer le mot de passe *</label>
-                            <input type="password" id="confirmPassword" class="form-control" placeholder="Confirmez votre mot de passe" required>
-                            <div class="error-message" id="confirmPasswordError">Les mots de passe ne correspondent pas</div>
-                        </div>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email *</label>
+                    <input type="email" id="email" name="email" class="form-control" placeholder="votre@email.com" required>
+                    <div class="error-message" id="emailError">Veuillez entrer un email valide</div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="password">Mot de passe *</label>
+                        <input type="password" id="password" name="password" class="form-control" placeholder="Votre mot de passe" required>
+                        <div class="error-message" id="passwordError">Le mot de passe doit contenir au moins 8 caractères</div>
                     </div>
-                    <div class="form-check">
-                        <input type="checkbox" id="conditions" class="form-check-input" required>
-                        <label for="conditions" class="form-check-label">
-                            J'accepte les <a href="#" target="_blank">conditions générales d'utilisation</a> et la <a href="#" target="_blank">politique de confidentialité</a> *
-                        </label>
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirmer le mot de passe *</label>
+                        <input type="password" id="confirmPassword" name="confirmPassword" class="form-control" placeholder="Confirmez votre mot de passe" required>
+                        <div class="error-message" id="confirmPasswordError">Les mots de passe ne correspondent pas</div>
                     </div>
-                    <div class="error-message" id="conditionsError">Vous devez accepter les conditions générales</div>
-                    <div class="form-actions">
-                        <button type="submit" class="btn btn-primary btn-large">Créer mon compte</button>
-                        <a href="{% url 'login_user' %}" class="btn btn-secondary">J'ai déjà un compte</a>
-                    </div>
-                    <div class="form-footer">
-                        <p>En créant un compte, vous acceptez nos <a href="#" target="_blank">conditions générales</a> et notre <a href="#" target="_blank">politique de confidentialité</a>.</p>
-                    </div>
-                </form>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" id="conditions" name="conditions" class="form-check-input" required>
+                    <label for="conditions" class="form-check-label">
+                        J'accepte les <a href="#" target="_blank">conditions générales d'utilisation</a> et la <a href="#" target="_blank">politique de confidentialité</a> *
+                    </label>
+                </div>
+                <div class="error-message" id="conditionsError">Vous devez accepter les conditions générales</div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary btn-large">Créer mon compte</button>
+                    <a href="{% url 'login_user' %}" class="btn btn-secondary">J'ai déjà un compte</a>
+                </div>
+                <div class="form-footer">
+                    <p>En créant un compte, vous acceptez nos <a href="#" target="_blank">conditions générales</a> et notre <a href="#" target="_blank">politique de confidentialité</a>.</p>
+                </div>
+            </form>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
+     <!-- Footer -->
     <footer id="contact">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-column">
-                    <h3>FindHome</h3>
+                    <h3>LocalEasy</h3>
                     <p>Votre partenaire de confiance pour trouver facilement où vous installer. Maisons, villas, appartements et chambres dans toute la France.</p>
                     <div class="social-links">
                         <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
@@ -121,12 +134,11 @@
                 <div class="footer-column">
                     <h3>Liens rapides</h3>
                     <ul class="footer-links">
-                        <li><a href="{% url 'accueil' %}">Accueil</a></li>
-                        <li><a href="{% url 'accueil' %}#properties">Propriétés</a></li>
-                        <li><a href="{% url 'accueil' %}#about">À propos</a></li>
-                        <li><a href="{% url 'accueil' %}#services">Services</a></li>
-                        <li><a href="{% url 'accueil' %}#testimonials">Témoignages</a></li>
-                        <li><a href="{% url 'accueil' %}#contact">Contact</a></li>
+                        <li><a href="#home">Accueil</a></li>
+                        <li><a href="#properties">Propriétés</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#about">À propos</a></li>
+                        <li><a href="#testimonials">Témoignages</a></li>
                     </ul>
                 </div>
                 <div class="footer-column">
@@ -144,21 +156,21 @@
                     <ul class="footer-contact">
                         <li>
                             <i class="fas fa-map-marker-alt"></i>
-                            <span>123 Avenue de la République, 75011 Paris, France</span>
+                            <span>LocalEasy</span>
                         </li>
                         <li>
                             <i class="fas fa-phone"></i>
-                            <span>+33 1 23 45 67 89</span>
+                            <span>+237 658 03 66 48</span>
                         </li>
                         <li>
                             <i class="fas fa-envelope"></i>
-                            <span>contact@findhome.fr</span>
+                            <span>contact@LocalEasy.cm</span>
                         </li>
                     </ul>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2023 FindHome. Tous droits réservés.</p>
+                <p>&copy; 2025 LocalEasy. Tous droits réservés.</p>
             </div>
         </div>
     </footer>

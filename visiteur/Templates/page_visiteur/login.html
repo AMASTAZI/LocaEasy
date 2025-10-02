@@ -4,9 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Connexion - FindHome</title>
+    <title>Connexion - LocalEasy</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="{% static 'css/login.css' %}">
+    <link rel="stylesheet" href="{% static 'css/messages.css' %}">
+
 </head>
 <body>
     <!-- Header -->
@@ -15,7 +17,7 @@
             <nav class="navbar">
                 <a href="index.html" class="logo">
                     <i class="fas fa-home"></i>
-                    FindHome
+                    LocalEasy
                 </a>
                 <ul class="nav-links">
                     <li><a href="{% url 'accueil' %}">Accueil</a></li>
@@ -43,54 +45,72 @@
                     <h2>Connexion</h2>
                     <p>Accédez à votre compte FindHome</p>
                 </div>
-                <form class="login-form" id="loginForm">
+               <form class="login-form" id="loginForm" method="POST" action="{% url 'login_user' %}">
+                    {% csrf_token %} <!-- Inclusion du token CSRF pour sécuriser le formulaire -->
+
+                {% if messages %}
+                <div class="messages">
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }} auto-hide">
+                            {{ message }}
+                            <button class="alert-close" onclick="this.parentElement.remove()">×</button>
+                        </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                    
                     <div class="form-group">
                         <label for="email">Email *</label>
-                        <input type="email" id="email" class="form-control" placeholder="votre@email.com" required>
+                        <input type="email" id="email" name="email" class="form-control" placeholder="votre@email.com" required>
                         <div class="error-message" id="emailError">Veuillez entrer un email valide</div>
                     </div>
+                    
                     <div class="form-group">
                         <label for="password">Mot de passe *</label>
-                        <input type="password" id="password" class="form-control" placeholder="Votre mot de passe" required>
+                        <input type="password" id="password" name="password" class="form-control" placeholder="Votre mot de passe" required>
                         <div class="error-message" id="passwordError">Veuillez entrer votre mot de passe</div>
                     </div>
+                    
                     <div class="form-options">
                         <div class="form-check">
-                            <input type="checkbox" id="remember" class="form-check-input">
+                            <input type="checkbox" id="remember" name="remember" class="form-check-input">
                             <label for="remember" class="form-check-label">Se souvenir de moi</label>
                         </div>
                         <a href="#" class="forgot-password">Mot de passe oublié ?</a>
                     </div>
+                    
                     <div class="form-actions">
                         <button type="submit" class="btn btn-primary btn-large" style="width: 100%;">Se connecter</button>
                     </div>
+                    
                     <div class="social-login">
                         <div class="social-login-title">Ou connectez-vous avec</div>
                         <div class="social-buttons">
                             <button type="button" class="social-btn google">
-                                <i class="fab fa-google"></i>
-                                Google
+                                <i class="fab fa-google"></i> Google
                             </button>
                             <button type="button" class="social-btn facebook">
-                                <i class="fab fa-facebook-f"></i>
-                                Facebook
+                                <i class="fab fa-facebook-f"></i> Facebook
                             </button>
                         </div>
                     </div>
+                    
                     <div class="form-footer">
                         <p>Vous n'avez pas de compte ? <a href="{% url 'inscription_utilisateur' %}">Inscrivez-vous</a></p>
                     </div>
                 </form>
+
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
+   <!-- Footer -->
     <footer id="contact">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-column">
-                    <h3>FindHome</h3>
+                    <h3>LocalEasy</h3>
                     <p>Votre partenaire de confiance pour trouver facilement où vous installer. Maisons, villas, appartements et chambres dans toute la France.</p>
                     <div class="social-links">
                         <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
@@ -102,12 +122,11 @@
                 <div class="footer-column">
                     <h3>Liens rapides</h3>
                     <ul class="footer-links">
-                       <li><a href="{% url 'accueil' %}">Accueil</a></li>
-                        <li><a href="{% url 'accueil' %}#properties">Propriétés</a></li>
-                        <li><a href="{% url 'accueil' %}#about">À propos</a></li>
-                        <li><a href="{% url 'accueil' %}#services">Services</a></li>
-                        <li><a href="{% url 'accueil' %}#testimonials">Témoignages</a></li>
-                        <li><a href="{% url 'accueil' %}#contact">Contact</a></li>
+                        <li><a href="#home">Accueil</a></li>
+                        <li><a href="#properties">Propriétés</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#about">À propos</a></li>
+                        <li><a href="#testimonials">Témoignages</a></li>
                     </ul>
                 </div>
                 <div class="footer-column">
@@ -125,25 +144,59 @@
                     <ul class="footer-contact">
                         <li>
                             <i class="fas fa-map-marker-alt"></i>
-                            <span>123 Avenue de la République, 75011 Paris, France</span>
+                            <span>LocalEasy</span>
                         </li>
                         <li>
                             <i class="fas fa-phone"></i>
-                            <span>+33 1 23 45 67 89</span>
+                            <span>+237 658 03 66 48</span>
                         </li>
                         <li>
                             <i class="fas fa-envelope"></i>
-                            <span>contact@findhome.fr</span>
+                            <span>contact@LocalEasy.cm</span>
                         </li>
                     </ul>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2023 FindHome. Tous droits réservés.</p>
+                <p>&copy; 2025 LocalEasy. Tous droits réservés.</p>
             </div>
         </div>
     </footer>
+    
+    <script>
+             
+       // Form submission
+    loginForm.addEventListener('submit', (e) => {
+    e.preventDefault(); // Empêche la soumission traditionnelle du formulaire
+    
+    const isEmailValid = validateEmail();
+    const isPasswordValid = validatePassword();
+    
+    if (isEmailValid && isPasswordValid) {
+        // Action après validation
+        alert('Operation en cours..........');
+        loginForm.submit(); // Cela soumet réellement le formulaire
+        
+        // Réinitialiser le formulaire
+        loginForm.reset();
+        
+        // Supprimer les classes de succès
+        const inputs = loginForm.querySelectorAll('.form-control');
+        inputs.forEach(input => {
+            input.classList.remove('success');
+        });
+        
+        // Soumettre le formulaire de manière programmatique
 
+        
+        // Si tu veux ajouter une redirection après soumission
+        // window.location.href = 'dashboard.html'; // Décommente cette ligne pour rediriger
+    } else {
+        // Si la validation échoue, afficher un message d'erreur
+        alert('Veuillez vérifier vos informations de connexion.');
+    }
+});
+    </script>
     <script src="{% static 'js/login.js' %}">
       
     </script>
