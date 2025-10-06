@@ -35,12 +35,12 @@
         </div>
     </header>
 
-    <!-- Contract Section -->
+    <!-- Section principale du contrat -->
     <section class="contract-section" id="contract">
         <div class="container">
             <h2 class="section-title">Signature du Contrat de Bail</h2>
             <div class="contract-container">
-                <!-- Contract Document -->
+                <!-- Document du contrat -->
                 <div class="contract-document">
                     <div class="contract-header">
                         <h1 class="contract-title">CONTRAT DE BAIL RÉSIDENTIEL</h1>
@@ -51,30 +51,26 @@
                         <div class="contract-section-title">ARTICLE 1 - OBJET DU CONTRAT</div>
                         <div class="contract-clause">
                             <p>Le présent contrat a pour objet la location d'un logement situé :</p>
-                            <p><strong>Adresse :</strong> 15 Rue de la République, 31000 Toulouse</p>
-                            <p><strong>Type :</strong> Appartement T2 de 65 m²</p>
-                            <p><strong>Étage :</strong> 3ème étage avec ascenseur</p>
+                            <p><strong>Adresse :</strong> {{ property.address }}, {{ property.city }} - {{ property.postal_code }}</p>
+                            <p><strong>Type :</strong> {{ property.property_type }}</p>
+                            <p><strong>Surface :</strong> {{ property.surface }} m²</p>
                         </div>
                         
                         <div class="contract-section-title">ARTICLE 2 - DURÉE DU BAIL</div>
                         <div class="contract-clause">
-                            <p>Le présent bail est consenti pour une durée de <strong>3 ans</strong> à compter du <strong>1er septembre 2023</strong> et se terminant le <strong>31 août 2026</strong>.</p>
-                            <p>Le bail est renouvelable tacitement par périodes triennales successives, sauf dénonciation par l'une ou l'autre des parties.</p>
+                            <p>Le présent bail est consenti pour une durée de <strong>{{ reservation.start_date }}</strong> à compter du <strong>{{ reservation.start_date }}</strong> et se terminant le <strong>{{ reservation.end_date }}</strong>.</p>
                         </div>
-                        
+
                         <div class="contract-section-title">ARTICLE 3 - LOYER ET CHARGES</div>
                         <div class="contract-clause">
-                            <p>Le loyer mensuel est fixé à <strong>750 €</strong>, payable d'avance le premier jour de chaque mois.</p>
-                            <p>Une provision sur charges de <strong>80 €</strong> est due mensuellement en sus du loyer.</p>
-                            <p>La régularisation des charges aura lieu annuellement sur présentation des décomptes.</p>
+                            <p>Le loyer mensuel est fixé à <strong>{{ property.price }} FCFA/mois</strong>, payable d'avance le premier jour de chaque mois.</p>
                         </div>
-                        
+
                         <div class="contract-section-title">ARTICLE 4 - CAUTION</div>
                         <div class="contract-clause">
-                            <p>Une caution d'un montant de <strong>750 €</strong> a été versée par le locataire lors de la signature du présent contrat.</p>
-                            <p>Cette caution sera restituée dans un délai de deux mois suivant la restitution des clés, déduction faite, le cas échéant, des sommes dues par le locataire.</p>
+                            <p>Une caution d'un montant de <strong>{{ property.price }} FCFA</strong> a été versée par le locataire lors de la signature du présent contrat.</p>
                         </div>
-                        
+
                         <div class="contract-section-title">ARTICLE 5 - OBLIGATIONS DU LOCATAIRE</div>
                         <div class="contract-clause">
                             <p>Le locataire s'engage à :</p>
@@ -83,59 +79,32 @@
                                 <li>Payer le loyer et les charges aux dates convenues</li>
                                 <li>Effectuer les menues réparations d'entretien</li>
                                 <li>Permettre l'accès au logement pour les visites et travaux nécessaires</li>
-                                <li>Souscrire une assurance habitation multirisques</li>
                             </ul>
                         </div>
-                        
-                        <div class="contract-section-title">ARTICLE 6 - OBLIGATIONS DU BAILLEUR</div>
-                        <div class="contract-clause">
-                            <p>Le bailleur s'engage à :</p>
-                            <ul>
-                                <li>Délivrer au locataire un logement décent et en bon état d'usage</li>
-                                <li>Effectuer les réparations locatives</li>
-                                <li>Respecter la tranquillité et la vie privée du locataire</li>
-                            </ul>
-                        </div>
-                        
-                        <div class="contract-section-title">ARTICLE 7 - ÉTAT DES LIEUX</div>
-                        <div class="contract-clause">
-                            <p>Un état des lieux d'entrée a été établi contradictoirement le 28 août 2023.</p>
-                            <p>Un état des lieux de sortie sera établi dans les mêmes conditions à la fin du bail.</p>
-                        </div>
-                        
+
                         <div class="contract-signature-area">
-                            <p>Fait à Toulouse, le <span id="contract-date">1er septembre 2023</span></p>
-                            
+                            <p>Fait à {{ property.city }}, le <span id="contract-date">{{ reservation.start_date }}</span></p>
+
                             <div class="signature-line">
                                 <div class="signature-field">
                                     <p>Pour le Bailleur</p>
                                     <div class="signature-line-placeholder"></div>
-                                    <p>M. Jean DUPONT</p>
+                                    <p>{{ property.first_name }}</p> <!-- Propriétaire -->
                                 </div>
-                                
+
                                 <div class="signature-field">
                                     <p>Pour le Locataire</p>
                                     <div class="signature-line-placeholder"></div>
-                                    <p id="tenant-name">[Votre nom]</p>
+                                    <p id="tenant-name"></p> <!-- Locataire -->
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Signature Panel -->
+                <!-- Panneau de signature -->
                 <div class="signature-panel">
                     <h3 class="panel-title">Signature électronique</h3>
-                    
-                    <div class="signature-instructions">
-                        <div class="instructions-title">Instructions :</div>
-                        <ul class="instructions-list">
-                            <li>Lisez attentivement le contrat ci-contre</li>
-                            <li>Choisissez votre méthode de signature</li>
-                            <li>Signez dans l'espace prévu à cet effet</li>
-                            <li>Confirmez votre signature</li>
-                        </ul>
-                    </div>
                     
                     <div class="signature-options">
                         <div class="signature-option active" data-type="draw">
@@ -162,56 +131,18 @@
                             <label for="typed-signature">Votre signature</label>
                             <input type="text" id="typed-signature" class="form-control" placeholder="Saisissez votre nom complet">
                         </div>
-                        <div class="form-group">
-                            <label for="signature-style">Style de signature</label>
-                            <select id="signature-style" class="form-control">
-                                <option value="cursive">Cursive</option>
-                                <option value="print">Script</option>
-                                <option value="formal">Formelle</option>
-                            </select>
-                        </div>
                     </div>
-                    
-                    <div class="signature-preview">
-                        <div class="preview-title">Aperçu de votre signature</div>
-                        <div id="signature-preview"></div>
-                    </div>
-                    
+
                     <div class="form-actions">
                         <button class="btn btn-success btn-full" id="confirm-signature">Signer le contrat</button>
                         <button class="btn btn-secondary btn-full" id="download-contract">Télécharger le contrat</button>
                     </div>
                 </div>
             </div>
-            
-            <!-- Contract Status -->
-            <div class="contract-status" id="contract-status">
-                <div class="status-header">
-                    <div class="status-icon">
-                        <i class="fas fa-check"></i>
-                    </div>
-                    <h3 class="status-title">Contrat signé avec succès !</h3>
-                </div>
-                <div class="status-message">
-                    <p>Votre contrat de bail a été signé électroniquement et est maintenant valide.</p>
-                    <p>Une copie du contrat signé a été envoyée à votre adresse email et est disponible dans votre espace personnel.</p>
-                </div>
-                <div class="next-steps">
-                    <div class="steps-title">Prochaines étapes :</div>
-                    <ul>
-                        <li>Le propriétaire va contresigner le contrat sous 48h</li>
-                        <li>Vous recevrez la version définitive par email</li>
-                        <li>Vous pouvez prendre possession des lieux à partir du 1er septembre 2023</li>
-                    </ul>
-                </div>
-                <div class="form-actions" style="margin-top: 20px;">
-                <button class="btn btn-primary btn-full" id="back-to-dashboard">Retour au tableau de bord</button>
-                </div>
-            </div>
         </div>
     </section>
 
-     <!-- Footer -->
+    <!-- Footer -->
     <footer id="contact">
         <div class="container">
             <div class="footer-content">
@@ -269,26 +200,314 @@
         </div>
     </footer>
 
-    <script src="{% static 'js/contrat.js' %}">
-  
-    </script>
+    <!-- Scripts externes -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
-    
-<script type="text/javascript">
-  // Back to dashboard
-            backToDashboardBtn.addEventListener('click', (e) => {
-                e.preventDefault();  // Prevent the default action (e.g., form submission)
+    <!-- Script principal -->
+    <script type="text/javascript">
+        // ===== INITIALISATION =====
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialisation des composants
+            initializeHeader();
+            initializeSignatureSystem();
+            initializePDFDownload();
+            initializeNavigation();
+            
+            // Définir la date actuelle dans le contrat
+            setCurrentDate();
+        });
 
-                // Show an alert before redirecting
-                alert('Retour au tableau de bord. Cette fonctionnalité serait implémentée dans une version complète.');
-
-                // Get the dashboard URL dynamically from Django template tag
-                const dashboardUrl = "{% url 'dashboard_client' %}";
-
-                // Redirect to the dashboard page
-                window.location.href = dashboardUrl;
+        // ===== GESTION DU HEADER =====
+        function initializeHeader() {
+            const header = document.getElementById('header');
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const navLinks = document.querySelector('.nav-links');
+            
+            // Effet de défilement
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 100) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
             });
+            
+            // Menu mobile
+            mobileMenuBtn.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+                mobileMenuBtn.innerHTML = navLinks.classList.contains('active') 
+                    ? '<i class="fas fa-times"></i>' 
+                    : '<i class="fas fa-bars"></i>';
+            });
+        }
 
-</script>
+        // ===== SYSTÈME DE SIGNATURE =====
+        function initializeSignatureSystem() {
+            const signatureOptions = document.querySelectorAll('.signature-option');
+            const drawSignatureContainer = document.getElementById('draw-signature');
+            const typeSignatureContainer = document.getElementById('type-signature');
+            const signatureCanvas = document.getElementById('signature-canvas');
+            const clearSignatureBtn = document.getElementById('clear-signature');
+            const typedSignatureInput = document.getElementById('typed-signature');
+            const confirmSignatureBtn = document.getElementById('confirm-signature');
+            const tenantNameElement = document.getElementById('tenant-name');
+            
+            let isDrawing = false;
+            let canvasContext;
+            let currentSignature = null;
+            
+            // Initialiser le canvas
+            function initCanvas() {
+                canvasContext = signatureCanvas.getContext('2d');
+                canvasContext.lineWidth = 2;
+                canvasContext.lineCap = 'round';
+                canvasContext.lineJoin = 'round';
+                canvasContext.strokeStyle = '#000';
+                
+                // Définir les dimensions du canvas
+                const containerWidth = drawSignatureContainer.clientWidth;
+                const containerHeight = drawSignatureContainer.clientHeight;
+                signatureCanvas.width = containerWidth;
+                signatureCanvas.height = containerHeight;
+                
+                // Effacer le canvas
+                canvasContext.fillStyle = '#f9f9f9';
+                canvasContext.fillRect(0, 0, signatureCanvas.width, signatureCanvas.height);
+            }
+            
+            // Événements du canvas
+            signatureCanvas.addEventListener('mousedown', startDrawing);
+            signatureCanvas.addEventListener('mousemove', draw);
+            signatureCanvas.addEventListener('mouseup', stopDrawing);
+            signatureCanvas.addEventListener('mouseout', stopDrawing);
+            
+            // Événements tactiles pour les appareils mobiles
+            signatureCanvas.addEventListener('touchstart', startDrawingTouch);
+            signatureCanvas.addEventListener('touchmove', drawTouch);
+            signatureCanvas.addEventListener('touchend', stopDrawing);
+            
+            function startDrawing(e) {
+                isDrawing = true;
+                draw(e);
+            }
+            
+            function startDrawingTouch(e) {
+                e.preventDefault();
+                isDrawing = true;
+                drawTouch(e);
+            }
+            
+            function draw(e) {
+                if (!isDrawing) return;
+                
+                canvasContext.lineTo(e.offsetX, e.offsetY);
+                canvasContext.stroke();
+                canvasContext.beginPath();
+                canvasContext.moveTo(e.offsetX, e.offsetY);
+                
+                // Mettre à jour l'aperçu de la signature
+                updateSignaturePreview();
+            }
+            
+            function drawTouch(e) {
+                if (!isDrawing) return;
+                
+                const touch = e.touches[0];
+                const rect = signatureCanvas.getBoundingClientRect();
+                const x = touch.clientX - rect.left;
+                const y = touch.clientY - rect.top;
+                
+                canvasContext.lineTo(x, y);
+                canvasContext.stroke();
+                canvasContext.beginPath();
+                canvasContext.moveTo(x, y);
+                
+                // Mettre à jour l'aperçu de la signature
+                updateSignaturePreview();
+            }
+            
+            function stopDrawing() {
+                isDrawing = false;
+                canvasContext.beginPath();
+            }
+            
+            // Effacer la signature
+            clearSignatureBtn.addEventListener('click', () => {
+                canvasContext.fillStyle = '#f9f9f9';
+                canvasContext.fillRect(0, 0, signatureCanvas.width, signatureCanvas.height);
+                currentSignature = null;
+                tenantNameElement.textContent = '';
+            });
+            
+            // Sélection du type de signature
+            signatureOptions.forEach(option => {
+                option.addEventListener('click', () => {
+                    // Supprimer la classe active de toutes les options
+                    signatureOptions.forEach(opt => opt.classList.remove('active'));
+                    // Ajouter la classe active à l'option cliquée
+                    option.classList.add('active');
+                    
+                    const signatureType = option.getAttribute('data-type');
+                    
+                    if (signatureType === 'draw') {
+                        drawSignatureContainer.style.display = 'block';
+                        typeSignatureContainer.style.display = 'none';
+                        initCanvas();
+                    } else {
+                        drawSignatureContainer.style.display = 'none';
+                        typeSignatureContainer.style.display = 'block';
+                        updateSignaturePreview();
+                    }
+                });
+            });
+            
+            // Mettre à jour l'aperçu de la signature pour la signature tapée
+            typedSignatureInput.addEventListener('input', updateSignaturePreview);
+            
+            function updateSignaturePreview() {
+                const activeOption = document.querySelector('.signature-option.active');
+                const signatureType = activeOption.getAttribute('data-type');
+                
+                if (signatureType === 'draw') {
+                    // Pour la signature dessinée, utiliser le contenu du canvas
+                    currentSignature = signatureCanvas.toDataURL();
+                    if (currentSignature) {
+                        // Dans une application réelle, vous pourriez afficher un aperçu ici
+                    }
+                } else {
+                    // Pour la signature tapée
+                    const signatureText = typedSignatureInput.value;
+                    if (signatureText) {
+                        currentSignature = signatureText;
+                        
+                        // Mettre à jour le nom du locataire dans le contrat
+                        tenantNameElement.textContent = signatureText;
+                    } else {
+                        currentSignature = null;
+                        tenantNameElement.textContent = '';
+                    }
+                }
+            }
+            
+            // Confirmer la signature
+            confirmSignatureBtn.addEventListener('click', () => {
+                if (!currentSignature) {
+                    alert('Veuillez fournir votre signature avant de confirmer.');
+                    return;
+                }
+                
+                if (confirm('Êtes-vous sûr de vouloir signer ce contrat ? Cette action est définitive.')) {
+                    // Dans une application réelle, vous enverriez la signature au serveur ici
+                    console.log('Signature confirmée:', currentSignature);
+                    
+                    // Rediriger vers le tableau de bord
+                    const dashboardUrl = "{% url 'dashboard_client' %}";
+                    window.location.href = dashboardUrl;
+                }
+            });
+            
+            // Initialiser le canvas au chargement de la page
+            initCanvas();
+        }
+
+           const property = {
+        address: "{{ property.address }}",
+        city: "{{ property.city }}",
+        postal_code: "{{ property.postal_code }}",
+        property_type: "{{ property.property_type }}",
+        surface: "{{ property.surface }}",
+        price: "{{ property.price }}",
+        tenant_name: "{{tenant_name}}" // Ou tu peux ajouter un champ pour que l'utilisateur entre son nom
+    };
+
+
+        // ===== TÉLÉCHARGEMENT PDF =====
+        function initializePDFDownload() {
+            const downloadButton = document.getElementById('download-contract');
+            
+            downloadButton.addEventListener('click', function() {
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF();
+
+                // Ajouter le contenu du contrat dans le PDF
+                doc.setFontSize(16);
+                doc.text("CONTRAT DE BAIL RÉSIDENTIEL", 20, 30);
+                doc.setFontSize(12);
+                doc.text("Entre le Bailleur et le Locataire", 20, 40);
+
+                // ARTICLE 1 - OBJET DU CONTRAT
+                doc.text("ARTICLE 1 - OBJET DU CONTRAT", 20, 50);
+                doc.text("Le présent contrat a pour objet la location d'un logement situé :", 20, 60);
+                doc.text("Adresse : {{ property.address }}, {{ property.city }} - {{ property.postal_code }}", 20, 70);
+                doc.text("Type : {{ property.property_type }}", 20, 80);
+                doc.text("Surface : {{ property.surface }} m²", 20, 90);
+
+                // ARTICLE 2 - DURÉE DU BAIL
+                doc.text("ARTICLE 2 - DURÉE DU BAIL", 20, 100);
+                doc.text(`Le présent bail est consenti pour une durée de 3 ans à compter du 1er septembre 2023 et se terminant le 31 août 2026.`, 20, 110);
+
+                // ARTICLE 3 - LOYER ET CHARGES
+                doc.text("ARTICLE 3 - LOYER ET CHARGES", 20, 120);
+                doc.text(`Le loyer mensuel est fixé à ${property.price} FCFA, payable d'avance le premier jour de chaque mois.`, 20, 130);
+
+                // ARTICLE 4 - CAUTION
+                doc.text("ARTICLE 4 - CAUTION", 20, 140);
+                doc.text(`Une caution d'un montant de ${property.price} FCFA a été versée par le locataire lors de la signature du présent contrat.`, 20, 150);
+
+                // ARTICLE 5 - OBLIGATIONS DU LOCATAIRE
+                doc.text("ARTICLE 5 - OBLIGATIONS DU LOCATAIRE", 20, 160);
+                doc.text("Le locataire s'engage à :", 20, 170);
+                doc.text("- Utiliser les lieux en bon père de famille à titre de résidence principale", 20, 180);
+                doc.text("- Payer le loyer et les charges aux dates convenues", 20, 190);
+
+                // Signatures
+                doc.text(`Fait à ${property.city}, le 1er septembre 2023`, 20, 200);
+                doc.text("Pour le Bailleur :", 20, 210);
+                doc.text("M. Jean DUPONT", 20, 220);
+
+                doc.text("Pour le Locataire :", 20, 230);
+                doc.text(`[Votre nom]`, 20, 240);
+
+                // Télécharger le PDF
+                doc.save("contrat_de_bail.pdf");
+            });
+        }
+
+        // ===== NAVIGATION =====
+        function initializeNavigation() {
+            // Navigation fluide pour les liens d'ancrage
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                        
+                        // Fermer le menu mobile s'il est ouvert
+                        const navLinks = document.querySelector('.nav-links');
+                        if (navLinks.classList.contains('active')) {
+                            navLinks.classList.remove('active');
+                            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+                            mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                        }
+                    }
+                });
+            });
+        }
+
+        // ===== FONCTIONS UTILITAIRES =====
+        function setCurrentDate() {
+            const now = new Date();
+            const options = { day: 'numeric', month: 'long', year: 'numeric' };
+            document.getElementById('contract-date').textContent = now.toLocaleDateString('fr-FR', options);
+        }
+    </script>
 </body>
 </html>

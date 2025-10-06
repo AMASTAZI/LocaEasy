@@ -132,104 +132,59 @@
             </div>
         </div>
     </section>
-
-    <!-- Properties Section -->
-    <section class="section properties" id="properties">
-        <div class="container">
-            <div class="properties-header">
-                <h2 class="section-title">Propriétés disponibles</h2>
-                <div class="properties-filter">
-                    <button class="filter-btn active">Tous</button>
-                    <button class="filter-btn">Maisons</button>
-                    <button class="filter-btn">Villas</button>
-                    <button class="filter-btn">Appartements</button>
-                    <button class="filter-btn">Chambres</button>
-                </div>
-            </div>
-            <div class="properties-grid">
-                <div class="property-card">
-                    <div class="property-img">
-                        <img src="https://images.unsplash.com/photo-1518780664697-55e3ad937233?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2065&q=80" alt="Maison familiale spacieuse">
-                        <div class="property-badge">Nouveau</div>
-                    </div>
-                    <div class="property-content">
-                        <div class="property-price">120000FCFA <span>/mois</span></div>
-                        <h3 class="property-title">Maison familiale spacieuse</h3>
-                        <div class="property-location">
-                            <i class="fas fa-map-marker-alt"></i>
-                            Lyon, France
-                        </div>
-                        <div class="property-features">
-                            <div class="property-feature">
-                                <i class="fas fa-bed"></i> 4 chambres
-                            </div>
-                            <div class="property-feature">
-                                <i class="fas fa-bath"></i> 2 salles de bain
-                            </div>
-                            <div class="property-feature">
-                                <i class="fas fa-expand"></i> 150 m²
-                            </div>
-                        </div>
-                        <button class="btn btn-reserve" onclick="window.location.href='/client/formulaire_reservation';">Réserver</button>
-                    </div>
-                </div>
-                <div class="property-card">
-                    <div class="property-img">
-                        <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Appartement moderne centre-ville">
-                        <div class="property-badge">Populaire</div>
-                    </div>
-                    <div class="property-content">
-                        <div class="property-price">120000FCFA <span>/mois</span></div>
-                        <h3 class="property-title">Appartement moderne centre-ville</h3>
-                        <div class="property-location">
-                            <i class="fas fa-map-marker-alt"></i>
-                            Toulouse, France
-                        </div>
-                        <div class="property-features">
-                            <div class="property-feature">
-                                <i class="fas fa-bed"></i> 2 chambres
-                            </div>
-                            <div class="property-feature">
-                                <i class="fas fa-bath"></i> 1 salle de bain
-                            </div>
-                            <div class="property-feature">
-                                <i class="fas fa-expand"></i> 65 m²
-                            </div>
-                        </div>
-                        <button class="btn btn-reserve" onclick="window.location.href='formulaire_reservation';">Réserver</button>
-                    </div>
-                </div>
-                <div class="property-card">
-                    <div class="property-img">
-                        <img src="https://images.unsplash.com/photo-1613977257363-707ba9348227?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Villa avec piscine">
-                    </div>
-                    <div class="property-content">
-                        <div class="property-price">120000FCFA <span>/mois</span></div>
-                        <h3 class="property-title">Villa avec piscine</h3>
-                        <div class="property-location">
-                            <i class="fas fa-map-marker-alt"></i>
-                            Nice, France
-                        </div>
-                        <div class="property-features">
-                            <div class="property-feature">
-                                <i class="fas fa-bed"></i> 5 chambres
-                            </div>
-                            <div class="property-feature">
-                                <i class="fas fa-bath"></i> 3 salles de bain
-                            </div>
-                            <div class="property-feature">
-                                <i class="fas fa-expand"></i> 220 m²
-                            </div>
-                        </div>
-                        <button class="btn btn-reserve">Réserver</button>
-                    </div>
-                </div>
-            </div>
-            <div style="text-align: center; margin-top: 50px;">
-                <a href="#" class="btn btn-primary btn-large">Voir toutes les propriétés</a>
+<!-- Properties Section -->
+<section class="section properties" id="properties">
+    <div class="container">
+        <div class="properties-header">
+            <h2 class="section-title">Propriétés disponibles</h2>
+            <div class="properties-filter">
+                <button class="filter-btn active">Tous</button>
+                <button class="filter-btn">Maisons</button>
+                <button class="filter-btn">Villas</button>
+                <button class="filter-btn">Appartements</button>
+                <button class="filter-btn">Chambres</button>
             </div>
         </div>
-    </section>
+
+        <div class="properties-grid">
+           <!-- Affichage des propriétés -->
+{% for property in properties %}
+    <div class="property-card">
+        <div class="property-img">
+            <img src="{{ property.image.url }}" alt="{{ property.title }}">
+            <div class="property-badge">Nouveau</div>
+        </div>
+        <div class="property-content">
+            <div class="property-price">{{ property.price }} FCFA <span>/mois</span></div>
+            <h3 class="property-title">{{ property.title }}</h3>
+            <div class="property-location">
+                <i class="fas fa-map-marker-alt"></i>
+                {{ property.city }}, {{ property.address }}
+            </div>
+            <div class="property-features">
+                <div class="property-feature">
+                    <i class="fas fa-bed"></i> {{ property.bedrooms }} chambre(s)
+                </div>
+                <div class="property-feature">
+                    <i class="fas fa-bath"></i> {{ property.bathrooms }} salle(s) de bain
+                </div>
+                <div class="property-feature">
+                    <i class="fas fa-expand"></i> {{ property.surface }} m²
+                </div>
+            </div>
+            <button class="btn btn-reserve" onclick="window.location.href='{% url 'formulaire_reservation' property.id %}';">Réserver</button>
+        </div>
+    </div>
+{% endfor %}
+
+        </div>
+
+        <div style="text-align: center; margin-top: 50px;">
+            <a href="#" class="btn btn-primary btn-large">Voir toutes les propriétés</a>
+        </div>
+    </div>
+</section>
+
 
     <!-- Testimonials Section -->
     <section class="section testimonials" id="testimonials">

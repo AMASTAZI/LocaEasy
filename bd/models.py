@@ -198,3 +198,67 @@ class Visite(models.Model):
     def annuler(self):
         self.statut = self.StatutVisite.ANNULEE
         self.save()
+        
+
+
+
+
+class Property(models.Model):
+    TYPE_CHOICES = [
+        ('appartement', 'Appartement'),
+        ('maison', 'Maison'),
+        ('studio', 'Studio'),
+        ('loft', 'Loft'),
+    ]
+
+    title = models.CharField(max_length=200)
+    address = models.CharField(max_length=255)
+    city = models.CharField(max_length=100)
+    postal_code = models.CharField(max_length=10)
+    property_type = models.CharField(max_length=50, choices=TYPE_CHOICES)
+    rooms = models.IntegerField()
+    bedrooms = models.IntegerField()
+    bathrooms = models.IntegerField()
+    surface = models.IntegerField()
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    description = models.TextField()
+    image = models.ImageField(upload_to='property_images/', null=True, blank=True)
+
+    def __str__(self):
+        return self.title
+    
+    
+
+
+
+class Reservation(models.Model):
+    property = models.ForeignKey(Property, on_delete=models.CASCADE, related_name='reservations')
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    email = models.EmailField()
+    phone = models.CharField(max_length=15)
+    check_in = models.DateField()
+    check_out = models.DateField()
+    occupants = models.IntegerField()
+    message = models.TextField(blank=True, null=True)
+    status = models.CharField(max_length=50, default='En attente')  # Statut de la réservation
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Reservation for {self.first_name} {self.last_name} at {self.property.title}"
+    
+    
+
+
+class Contract(models.Model):
+    property = models.ForeignKey(Property, on_delete=models.CASCADE)  # Propriété concernée
+    tenant = models.ForeignKey(Utilisateur, on_delete=models.CASCADE)  # Locataire
+    start_date = models.DateField()
+    end_date = models.DateField()
+    rent = models.DecimalField(max_digits=10, decimal_places=2)
+    security_deposit = models.DecimalField(max_digits=10, decimal_places=2)
+    document_url = models.URLField()  # URL vers le contrat signé
+    is_signed = models.BooleanField(default=False)  # Statut de la signature
+
+    def __str__(self):
+        return f"Contrat pour {self.property.title} - Locataire: {self.tenant.username}"

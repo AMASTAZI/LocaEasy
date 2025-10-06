@@ -8,7 +8,323 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="{% static 'css/proprieter.css' %}">
     <link rel="stylesheet" href="{% static 'css/messages.css' %}">
+    <style>
+        /* Variables CSS */
+        :root {
+            --primary-color: #2b6cb0;
+            --success-color: #276749;
+            --error-color: #c53030;
+            --warning-color: #d69e2e;
+            --text-dark: #2d3748;
+            --text-medium: #4a5568;
+            --text-light: #718096;
+            --bg-light: #f7fafc;
+            --shadow-light: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 12px 20px rgba(0, 0, 0, 0.15);
+            --border-radius: 12px;
+            --transition: all 0.3s ease;
+        }
 
+        /* Reset et base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-medium);
+            background-color: var(--bg-light);
+        }
+
+        /* Grille des propriétés */
+        .properties-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            padding: 1rem 0;
+        }
+
+        /* Cartes de propriétés */
+        .property-card {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-light);
+            overflow: hidden;
+            transition: var(--transition);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .property-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        /* Animations des cartes */
+        .property-card:nth-child(1) { animation-delay: 0.1s; }
+        .property-card:nth-child(2) { animation-delay: 0.2s; }
+        .property-card:nth-child(3) { animation-delay: 0.3s; }
+        .property-card:nth-child(4) { animation-delay: 0.4s; }
+        .property-card:nth-child(5) { animation-delay: 0.5s; }
+        .property-card:nth-child(6) { animation-delay: 0.6s; }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Image de la propriété */
+        .property-image {
+            position: relative;
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .property-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .property-card:hover .property-image img {
+            transform: scale(1.05);
+        }
+
+        /* Informations de la propriété */
+        .property-info {
+            padding: 1.5rem;
+        }
+
+        .property-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
+
+        .property-location {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .property-details {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .property-detail {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            color: var(--text-medium);
+            font-size: 0.875rem;
+        }
+
+        .property-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        /* Actions et statut */
+        .property-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .property-status {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-available {
+            background-color: #c6f6d5;
+            color: var(--success-color);
+        }
+
+        .status-occupied {
+            background-color: #fed7d7;
+            color: var(--error-color);
+        }
+
+        .status-maintenance {
+            background-color: #feebc8;
+            color: var(--warning-color);
+        }
+
+        /* Boutons */
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid #cbd5e0;
+            color: var(--text-medium);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .btn-danger {
+            background: #e53e3e;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #c53030;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2c5282;
+        }
+
+        /* États vides */
+        .empty-state {
+            text-align: center;
+            padding: 3rem 2rem;
+            color: var(--text-light);
+        }
+
+        .empty-state i {
+            margin-bottom: 1rem;
+            color: #cbd5e0;
+        }
+
+        .empty-state h3 {
+            margin-bottom: 0.5rem;
+            color: var(--text-medium);
+        }
+
+        /* En-têtes de section */
+        .dashboard-header {
+            margin-bottom: 2rem;
+        }
+
+        .dashboard-header h1 {
+            font-size: 2rem;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .dashboard-header p {
+            color: var(--text-light);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            color: var(--text-dark);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .properties-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .property-actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .property-actions > div {
+                display: flex;
+                gap: 0.5rem;
+            }
+            
+            .property-actions .btn {
+                flex: 1;
+                justify-content: center;
+            }
+
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .dashboard-header h1 {
+                font-size: 1.75rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .property-details {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .property-info {
+                padding: 1rem;
+            }
+        }
+
+        /* Animations pour les modales */
+        .modal.active {
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Header -->
@@ -26,7 +342,7 @@
                     <li><a href="{% url 'accueil' %}#contact">Contact</a></li>
                 </ul>
 
-                                {% if messages %}
+                {% if messages %}
                 <div class="messages">
                     {% for message in messages %}
                         <div class="alert alert-{{ message.tags }} auto-hide">
@@ -36,6 +352,7 @@
                     {% endfor %}
                 </div>
                 {% endif %}
+                
                 <div class="nav-actions">
                     <div class="user-menu">
                         <div class="user-avatar">
@@ -45,7 +362,7 @@
                         <i class="fas fa-chevron-down"></i>
                         <div class="dropdown-menu">
                             <a href="{% url 'page_bailleur_profile' %}"><i class="fas fa-user"></i> Mon Profil</a>
-                            <a href="#"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
+                            <a href="{% url 'deconnexion' %}"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
                         </div>
                     </div>
                     <button class="mobile-menu-btn">
@@ -78,287 +395,458 @@
                 <div class="section">
                     <div class="section-header">
                         <h2 class="section-title">Liste des propriétés</h2>
-                        <button class="btn" id="addPropertyBtn"><i class="fas fa-plus"></i> Ajouter une propriété</button>
+                        <button class="btn btn-primary" id="addPropertyBtn">
+                            <i class="fas fa-plus"></i> Ajouter une propriété
+                        </button>
                     </div>
 
                     <div class="properties-grid">
-                        <!-- Property Card 1 -->
+                        {% for property in properties %}
                         <div class="property-card">
                             <div class="property-image">
-                                <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Appartement Lyon">
+                                {% if property.image %}
+                                    <img src="{{ property.image.url }}" alt="{{ property.title }}">
+                                {% else %}
+                                    <img src="{% static 'images/default-property.jpg' %}" alt="Image par défaut">
+                                {% endif %}
                             </div>
                             <div class="property-info">
-                                <h3 class="property-title">Appartement T3 - Centre-ville Lyon</h3>
+                                <h3 class="property-title">{{ property.title }}</h3>
                                 <div class="property-location">
                                     <i class="fas fa-map-marker-alt"></i>
-                                    <span>15 Rue de la République, 69001 Lyon</span>
+                                    <span>{{ property.address }}, {{ property.postal_code }} {{ property.city }}</span>
                                 </div>
                                 <div class="property-details">
                                     <div class="property-detail">
                                         <i class="fas fa-bed"></i>
-                                        <span>2 chambres</span>
+                                        <span>{{ property.bedrooms }} chambre(s)</span>
                                     </div>
                                     <div class="property-detail">
                                         <i class="fas fa-bath"></i>
-                                        <span>1 salle de bain</span>
+                                        <span>{{ property.bathrooms }} salle(s) de bain</span>
                                     </div>
                                     <div class="property-detail">
                                         <i class="fas fa-ruler-combined"></i>
-                                        <span>65 m²</span>
+                                        <span>{{ property.surface }} m²</span>
                                     </div>
                                 </div>
-                                <div class="property-price">850 €/mois</div>
+                                <div class="property-price">{{ property.price }} FCFA/mois</div>
                                 <div class="property-actions">
-                                    <span class="property-status status-available">Disponible</span>
+                                    <span class="property-status {% if property.status == 'disponible' %}status-available{% elif property.status == 'occupé' %}status-occupied{% else %}status-maintenance{% endif %}">
+                                        {{ property.status|capfirst }}
+                                    </span>
                                     <div>
-                                        <button class="btn btn-outline edit-property" data-id="1"><i class="fas fa-edit"></i> Modifier</button>
-                                        <button class="btn btn-danger delete-property" data-id="1"><i class="fas fa-trash"></i> Supprimer</button>
+                                      <button class="btn btn-outline edit-property" data-id="{{ property.id }}">
+    <i class="fas fa-edit"></i> Modifier
+</button>
+                                        <button class="btn btn-danger delete-property" data-id="{{ property.id }}">
+                                            <i class="fas fa-trash"></i> Supprimer
+                                        </button>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-                        <!-- Property Card 2 -->
-                        <div class="property-card">
-                            <div class="property-image">
-                                <img src="https://images.unsplash.com/photo-1513584684374-8bab748fbf90?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Studio Villeurbanne">
-                            </div>
-                            <div class="property-info">
-                                <h3 class="property-title">Studio - Proche métro</h3>
-                                <div class="property-location">
-                                    <i class="fas fa-map-marker-alt"></i>
-                                    <span>25 Avenue Roger Salengro, 69100 Villeurbanne</span>
-                                </div>
-                                <div class="property-details">
-                                    <div class="property-detail">
-                                        <i class="fas fa-bed"></i>
-                                        <span>1 chambre</span>
-                                    </div>
-                                    <div class="property-detail">
-                                        <i class="fas fa-bath"></i>
-                                        <span>1 salle de bain</span>
-                                    </div>
-                                    <div class="property-detail">
-                                        <i class="fas fa-ruler-combined"></i>
-                                        <span>35 m²</span>
-                                    </div>
-                                </div>
-                                <div class="property-price">550 €/mois</div>
-                                <div class="property-actions">
-                                    <span class="property-status status-occupied">Occupé</span>
-                                    <div>
-                                        <button class="btn btn-outline edit-property" data-id="2"><i class="fas fa-edit"></i> Modifier</button>
-                                        <button class="btn btn-danger delete-property" data-id="2"><i class="fas fa-trash"></i> Supprimer</button>
-                                    </div>
-                                </div>
-                            </div>
+                        {% empty %}
+                        <div class="empty-state">
+                            <i class="fas fa-home fa-3x"></i>
+                            <h3>Aucune propriété</h3>
+                            <p>Commencez par ajouter votre première propriété</p>
+                            <button class="btn btn-primary" id="addFirstPropertyBtn">
+                                <i class="fas fa-plus"></i> Ajouter une propriété
+                            </button>
                         </div>
-
-                        <!-- Property Card 3 -->
-                        <div class="property-card">
-                            <div class="property-image">
-                                <img src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Maison Caluire">
-                            </div>
-                            <div class="property-info">
-                                <h3 class="property-title">Maison avec jardin - Caluire</h3>
-                                <div class="property-location">
-                                    <i class="fas fa-map-marker-alt"></i>
-                                    <span>8 Chemin de Montessuy, 69300 Caluire-et-Cuire</span>
-                                </div>
-                                <div class="property-details">
-                                    <div class="property-detail">
-                                        <i class="fas fa-bed"></i>
-                                        <span>4 chambres</span>
-                                    </div>
-                                    <div class="property-detail">
-                                        <i class="fas fa-bath"></i>
-                                        <span>2 salles de bain</span>
-                                    </div>
-                                    <div class="property-detail">
-                                        <i class="fas fa-ruler-combined"></i>
-                                        <span>120 m²</span>
-                                    </div>
-                                </div>
-                                <div class="property-price">1 200 €/mois</div>
-                                <div class="property-actions">
-                                    <span class="property-status status-maintenance">En maintenance</span>
-                                    <div>
-                                        <button class="btn btn-outline edit-property" data-id="3"><i class="fas fa-edit"></i> Modifier</button>
-                                        <button class="btn btn-danger delete-property" data-id="3"><i class="fas fa-trash"></i> Supprimer</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Add Property Modal -->
-    <div class="modal" id="addPropertyModal">
+ <!-- Modal d'ajout de propriété -->
+<div class="modal" id="addPropertyModal" tabindex="-1" aria-labelledby="addPropertyModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title">Ajouter une propriété</h3>
-                <button class="modal-close">&times;</button>
+                <h5 class="modal-title" id="addPropertyModalLabel">Ajouter une propriété</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="addPropertyForm">
+                <form method="POST" enctype="multipart/form-data" action="{% url 'add_property' %}">
+                    {% csrf_token %}
+                    
                     <div class="form-group">
                         <label for="propertyTitle">Titre de l'annonce</label>
-                        <input type="text" id="propertyTitle" class="form-control" placeholder="Ex: Appartement T3 centre-ville">
+                        <input type="text" id="propertyTitle" name="propertyTitle" class="form-control" placeholder="Ex: Appartement T3 centre-ville" required>
                     </div>
+
                     <div class="form-group">
                         <label for="propertyAddress">Adresse</label>
-                        <input type="text" id="propertyAddress" class="form-control" placeholder="Ex: 15 Rue de la République">
+                        <input type="text" id="propertyAddress" name="propertyAddress" class="form-control" placeholder="Ex: 15 Rue de la République" required>
                     </div>
+
                     <div class="form-group">
                         <label for="propertyCity">Ville</label>
-                        <input type="text" id="propertyCity" class="form-control" placeholder="Ex: Lyon">
+                        <input type="text" id="propertyCity" name="propertyCity" class="form-control" placeholder="Ex: Lyon" required>
                     </div>
+
                     <div class="form-group">
                         <label for="propertyPostalCode">Code postal</label>
-                        <input type="text" id="propertyPostalCode" class="form-control" placeholder="Ex: 69001">
+                        <input type="text" id="propertyPostalCode" name="propertyPostalCode" class="form-control" placeholder="Ex: 69001" required>
                     </div>
+
                     <div class="form-group">
                         <label for="propertyType">Type de propriété</label>
-                        <select id="propertyType" class="form-control">
-                            <option value="">Sélectionnez un type</option>
+                        <select id="propertyType" name="propertyType" class="form-control" required>
                             <option value="appartement">Appartement</option>
                             <option value="maison">Maison</option>
                             <option value="studio">Studio</option>
                             <option value="loft">Loft</option>
                         </select>
                     </div>
+
                     <div class="form-group">
                         <label for="propertyRooms">Nombre de pièces</label>
-                        <input type="number" id="propertyRooms" class="form-control" min="1" placeholder="Ex: 3">
+                        <input type="number" id="propertyRooms" name="propertyRooms" class="form-control" min="1" required>
                     </div>
+
                     <div class="form-group">
                         <label for="propertyBedrooms">Nombre de chambres</label>
-                        <input type="number" id="propertyBedrooms" class="form-control" min="0" placeholder="Ex: 2">
+                        <input type="number" id="propertyBedrooms" name="propertyBedrooms" class="form-control" min="0" required>
                     </div>
+
                     <div class="form-group">
                         <label for="propertyBathrooms">Nombre de salles de bain</label>
-                        <input type="number" id="propertyBathrooms" class="form-control" min="1" placeholder="Ex: 1">
+                        <input type="number" id="propertyBathrooms" name="propertyBathrooms" class="form-control" min="1" required>
                     </div>
+
                     <div class="form-group">
                         <label for="propertySurface">Surface (m²)</label>
-                        <input type="number" id="propertySurface" class="form-control" min="1" placeholder="Ex: 65">
+                        <input type="number" id="propertySurface" name="propertySurface" class="form-control" min="1" required>
                     </div>
+
                     <div class="form-group">
-                        <label for="propertyPrice">Prix mensuel (€)</label>
-                        <input type="number" id="propertyPrice" class="form-control" min="1" placeholder="Ex: 850">
+                        <label for="propertyPrice">Prix mensuel (FCFA)</label>
+                        <input type="number" id="propertyPrice" name="propertyPrice" class="form-control" min="1" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="propertyDescription">Description</label>
+                        <textarea id="propertyDescription" name="propertyDescription" class="form-control" rows="4" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="propertyImage">Image de la propriété</label>
+                        <input type="file" id="propertyImage" name="propertyImage" class="form-control" accept="image/*" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Ajouter la propriété</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal d'édition de propriété -->
+<div class="modal" id="editPropertyModal" tabindex="-1" aria-labelledby="editPropertyModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editPropertyModalLabel">Modifier la propriété</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" enctype="multipart/form-data" id="editPropertyForm">
+                    {% csrf_token %}
+                    
+                    <!-- Titre de l'annonce -->
+                    <div class="form-group">
+                        <label for="propertyTitle">Titre de l'annonce</label>
+                        <input type="text" id="propertyTitle" name="propertyTitle" class="form-control" placeholder="Ex: Appartement T3 centre-ville" required>
+                    </div>
+
+                    <!-- Adresse -->
+                    <div class="form-group">
+                        <label for="propertyAddress">Adresse</label>
+                        <input type="text" id="propertyAddress" name="propertyAddress" class="form-control" placeholder="Ex: 15 Rue de la République" required>
+                    </div>
+
+                    <!-- Ville -->
+                    <div class="form-group">
+                        <label for="propertyCity">Ville</label>
+                        <input type="text" id="propertyCity" name="propertyCity" class="form-control" placeholder="Ex: Lyon" required>
+                    </div>
+
+                    <!-- Code postal -->
+                    <div class="form-group">
+                        <label for="propertyPostalCode">Code postal</label>
+                        <input type="text" id="propertyPostalCode" name="propertyPostalCode" class="form-control" placeholder="Ex: 69001" required>
+                    </div>
+
+                    <!-- Type de propriété -->
+                    <div class="form-group">
+                        <label for="propertyType">Type de propriété</label>
+                        <select id="propertyType" name="propertyType" class="form-control" required>
+                            <option value="appartement">Appartement</option>
+                            <option value="maison">Maison</option>
+                            <option value="studio">Studio</option>
+                            <option value="loft">Loft</option>
+                        </select>
+                    </div>
+
+                    <!-- Image actuelle -->
+                    <div class="form-group">
+                        <label for="currentImage">Image actuelle</label>
+                        <img id="currentImage" src="" alt="Image actuelle" style="display: none; width: 100px; height: auto;">
+                    </div>
+
+                    <!-- Nouveau fichier image -->
+                    <div class="form-group">
+                        <label for="propertyImage">Nouvelle image de la propriété</label>
+                        <input type="file" id="propertyImage" name="propertyImage" class="form-control" accept="image/*">
+                    </div>
+
+                    <!-- Autres champs -->
+                    <div class="form-group">
+                        <label for="propertyPrice">Prix mensuel (FCFA)</label>
+                        <input type="number" id="propertyPrice" name="propertyPrice" class="form-control" required>
                     </div>
                     <div class="form-group">
                         <label for="propertyDescription">Description</label>
-                        <textarea id="propertyDescription" class="form-control" rows="4" placeholder="Décrivez votre propriété..."></textarea>
+                        <textarea id="propertyDescription" name="propertyDescription" class="form-control" rows="4" required></textarea>
                     </div>
-                    <div class="form-group">
-                        <label for="propertyImage">Image de la propriété</label>
-                        <input type="file" id="propertyImage" class="form-control" accept="image/*">
-                    </div>
+
+                    <button type="submit" class="btn btn-primary">Sauvegarder les modifications</button>
                 </form>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-outline" id="cancelAddProperty">Annuler</button>
-                <button class="btn" id="saveProperty">Enregistrer</button>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- Edit Property Modal -->
-    <div class="modal" id="editPropertyModal">
+
+<!-- Modal de suppression -->
+<div class="modal" id="deletePropertyModal" tabindex="-1" aria-labelledby="deletePropertyModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title">Modifier la propriété</h3>
-                <button class="modal-close">&times;</button>
-            </div>
-            <div class="modal-body">
-                <form id="editPropertyForm">
-                    <input type="hidden" id="editPropertyId">
-                    <div class="form-group">
-                        <label for="editPropertyTitle">Titre de l'annonce</label>
-                        <input type="text" id="editPropertyTitle" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label for="editPropertyAddress">Adresse</label>
-                        <input type="text" id="editPropertyAddress" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label for="editPropertyCity">Ville</label>
-                        <input type="text" id="editPropertyCity" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label for="editPropertyPostalCode">Code postal</label>
-                        <input type="text" id="editPropertyPostalCode" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label for="editPropertyType">Type de propriété</label>
-                        <select id="editPropertyType" class="form-control">
-                            <option value="appartement">Appartement</option>
-                            <option value="maison">Maison</option>
-                            <option value="studio">Studio</option>
-                            <option value="loft">Loft</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="editPropertyRooms">Nombre de pièces</label>
-                        <input type="number" id="editPropertyRooms" class="form-control" min="1">
-                    </div>
-                    <div class="form-group">
-                        <label for="editPropertyBedrooms">Nombre de chambres</label>
-                        <input type="number" id="editPropertyBedrooms" class="form-control" min="0">
-                    </div>
-                    <div class="form-group">
-                        <label for="editPropertyBathrooms">Nombre de salles de bain</label>
-                        <input type="number" id="editPropertyBathrooms" class="form-control" min="1">
-                    </div>
-                    <div class="form-group">
-                        <label for="editPropertySurface">Surface (m²)</label>
-                        <input type="number" id="editPropertySurface" class="form-control" min="1">
-                    </div>
-                    <div class="form-group">
-                        <label for="editPropertyPrice">Prix mensuel (€)</label>
-                        <input type="number" id="editPropertyPrice" class="form-control" min="1">
-                    </div>
-                    <div class="form-group">
-                        <label for="editPropertyDescription">Description</label>
-                        <textarea id="editPropertyDescription" class="form-control" rows="4"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="editPropertyImage">Image de la propriété</label>
-                        <input type="file" id="editPropertyImage" class="form-control" accept="image/*">
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-outline" id="cancelEditProperty">Annuler</button>
-                <button class="btn" id="updateProperty">Mettre à jour</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Delete Property Modal -->
-    <div class="modal" id="deletePropertyModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">Supprimer la propriété</h3>
-                <button class="modal-close">&times;</button>
+                <h5 class="modal-title" id="deletePropertyModalLabel">Confirmer la suppression</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <p>Êtes-vous sûr de vouloir supprimer cette propriété ? Cette action est irréversible.</p>
-                <input type="hidden" id="deletePropertyId">
             </div>
             <div class="modal-footer">
-                <button class="btn btn-outline" id="cancelDeleteProperty">Annuler</button>
-                <button class="btn btn-danger" id="confirmDeleteProperty">Supprimer</button>
+            <button type="button" class="btn btn-secondary" id="cancelButton" data-bs-dismiss="modal">Annuler</button>
+                <!-- Formulaire pour supprimer la propriété -->
+                <form id="deletePropertyForm" method="POST" action="" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Supprimer</button>
+                </form>
             </div>
         </div>
     </div>
+</div>
 
-    <script src="{% static 'js/proprieter.js' %}">
-       
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Éléments DOM
+            const addPropertyBtn = document.getElementById('addPropertyBtn');
+            const addFirstPropertyBtn = document.getElementById('addFirstPropertyBtn');
+            const addPropertyModal = document.getElementById('addPropertyModal');
+            const editPropertyModal = document.getElementById('editPropertyModal');
+            const deletePropertyModal = document.getElementById('deletePropertyModal');
+            const editPropertyBtns = document.querySelectorAll('.edit-property');
+            const deletePropertyBtns = document.querySelectorAll('.delete-property');
+
+            // Gestion de l'ouverture des modales
+            if (addPropertyBtn) {
+                addPropertyBtn.addEventListener('click', openAddPropertyModal);
+            }
+            
+            if (addFirstPropertyBtn) {
+                addFirstPropertyBtn.addEventListener('click', openAddPropertyModal);
+            }
+
+            // Gestion des boutons d'édition
+            editPropertyBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const propertyId = this.getAttribute('data-id');
+                    openEditPropertyModal(propertyId);
+                });
+            });
+
+            // Gestion des boutons de suppression
+            deletePropertyBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const propertyId = this.getAttribute('data-id');
+                    openDeletePropertyModal(propertyId);
+                });
+            });
+
+            // Animation au scroll
+            initScrollAnimations();
+
+            // Fonctions
+            function openAddPropertyModal() {
+                if (addPropertyModal) {
+                    addPropertyModal.classList.add('active');
+                }
+            }
+
+            function openEditPropertyModal(propertyId) {
+                if (editPropertyModal) {
+                    // Remplir le formulaire avec les données existantes
+                    const propertyData = getPropertyData(propertyId);
+                    if (propertyData) {
+                        // Remplir les champs du formulaire
+                        // À adapter selon votre structure de formulaire
+                    }
+                    editPropertyModal.classList.add('active');
+                }
+            }
+
+            function openDeletePropertyModal(propertyId) {
+                if (deletePropertyModal) {
+                    // Définir l'ID de la propriété à supprimer
+                    // À adapter selon votre structure
+                    deletePropertyModal.classList.add('active');
+                }
+            }
+
+            function initScrollAnimations() {
+                const observerOptions = {
+                    threshold: 0.1,
+                    rootMargin: '0px 0px -50px 0px'
+                };
+
+                const observer = new IntersectionObserver(function(entries) {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.style.animationPlayState = 'running';
+                        }
+                    });
+                }, observerOptions);
+
+                document.querySelectorAll('.property-card').forEach(card => {
+                    observer.observe(card);
+                });
+            }
+
+            // Fonction de simulation de données (à remplacer par des appels API réels)
+            function getPropertyData(id) {
+                // Simulation de données - à remplacer par vos données réelles
+                const properties = {
+                    '1': {
+                        title: 'Appartement T3 - Centre-ville Lyon',
+                        address: '15 Rue de la République',
+                        city: 'Lyon',
+                        postalCode: '69001',
+                        type: 'appartement',
+                        rooms: 3,
+                        bedrooms: 2,
+                        bathrooms: 1,
+                        surface: 65,
+                        price: 850,
+                        description: 'Bel appartement situé en plein centre-ville de Lyon, à proximité de tous les commerces et transports.'
+                    }
+                    // Ajouter d'autres propriétés selon vos besoins
+                };
+                
+                return properties[id];
+            }
+
+            // Gestion de la fermeture des modales (à implémenter selon votre structure de modales)
+            function setupModalCloseHandlers() {
+                const modalCloses = document.querySelectorAll('.modal-close, .cancel-btn');
+                modalCloses.forEach(close => {
+                    close.addEventListener('click', function() {
+                        const modal = this.closest('.modal');
+                        if (modal) {
+                            modal.classList.remove('active');
+                        }
+                    });
+                });
+
+                // Fermer en cliquant à l'extérieur
+                document.addEventListener('click', function(event) {
+                    if (event.target.classList.contains('modal')) {
+                        event.target.classList.remove('active');
+                    }
+                });
+            }
+
+            // Initialiser les gestionnaires de fermeture de modales
+            setupModalCloseHandlers();
+        });
+
+        document.querySelectorAll('.delete-property').forEach(function (button) {
+        button.addEventListener('click', function () {
+            var propertyId = this.getAttribute('data-id'); // Récupère l'ID de la propriété
+            var deleteForm = document.getElementById('deletePropertyForm');
+
+            // Modifier l'action du formulaire pour inclure l'ID de la propriété à supprimer
+            deleteForm.action = '/bailleur/delete-property/' + propertyId + '/'; // URL de suppression
+
+            // Afficher la modale
+            var myModal = new bootstrap.Modal(document.getElementById('deletePropertyModal'));
+            myModal.show();
+        });
+    });
+
+        document.getElementById('cancelButton').addEventListener('click', function() {
+        // Redirection vers une URL spécifique
+        window.location.href = '/bailleur/page_bailleur_gerer_proprieter/';  // Change '/properties' selon ta route
+    });
+
+// Écouteur d'événement pour le bouton "Modifier"
+document.querySelectorAll('.edit-property').forEach(button => {
+    button.addEventListener('click', function () {
+        const propertyId = this.getAttribute('data-id');  // Récupère l'ID de la propriété
+
+        // Utilisation de Fetch pour récupérer les données de la propriété via AJAX
+        fetch(`/bailleur/get_property/${propertyId}/`)  // L'URL du point d'accès pour obtenir les détails de la propriété
+            .then(response => response.json())
+            .then(data => {
+                // Remplir les champs du formulaire du modal avec les données de la propriété
+                document.getElementById('propertyTitle').value = data.title;
+                document.getElementById('propertyAddress').value = data.address;
+                document.getElementById('propertyCity').value = data.city;
+                document.getElementById('propertyPostalCode').value = data.postal_code;
+                document.getElementById('propertyType').value = data.property_type;
+                document.getElementById('propertyPrice').value = data.price;
+                document.getElementById('propertyDescription').value = data.description;
+
+                // Remplir les champs de la propriété
+                document.getElementById('propertyRooms').value = data.rooms;
+                document.getElementById('propertyBedrooms').value = data.bedrooms;
+                document.getElementById('propertyBathrooms').value = data.bathrooms;
+                document.getElementById('propertySurface').value = data.surface;
+
+                // Afficher l'image actuelle si elle existe
+                const imageElement = document.getElementById('currentImage');
+                if (data.image_url) {
+                    imageElement.src = data.image_url;
+                    imageElement.style.display = 'block';  // Afficher l'image
+                } else {
+                    imageElement.style.display = 'none';  // Masquer l'image si elle n'existe pas
+                }
+
+                // Modifier l'action du formulaire pour envoyer les données au bon endpoint d'édition
+                const form = document.getElementById('editPropertyForm');
+                form.action = `/bailleur/property/edit/${propertyId}/`;
+            })
+            .catch(error => {
+                console.error('Erreur:', error);
+                alert('Erreur lors du chargement des données de la propriété');
+            });
+    });
+});
+
+
+
+
+    
     </script>
 </body>
 </html>

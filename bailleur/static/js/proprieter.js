@@ -69,14 +69,6 @@
             cancelEditProperty.addEventListener('click', closeModals);
             cancelDeleteProperty.addEventListener('click', closeModals);
 
-            // Sauvegarder une nouvelle propriété
-            savePropertyBtn.addEventListener('click', function() {
-                // Dans une application réelle, vous enverriez les données à un serveur
-                alert('Propriété ajoutée avec succès!');
-                closeModals();
-                document.getElementById('addPropertyForm').reset();
-            });
-
             // Mettre à jour une propriété
             updatePropertyBtn.addEventListener('click', function() {
                 // Dans une application réelle, vous enverriez les données à un serveur

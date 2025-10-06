@@ -6,11 +6,15 @@ from django.urls import reverse
 
 
 
-from bd.models import Utilisateur
+from bd.models import Property, Utilisateur
 
 # Create your views here.
 def accueil(request):
-    return render(request,'page_visiteur/accueil.html')
+    property = Property.objects.all()
+    context = {
+        'properties':property
+    }
+    return render(request,'page_visiteur/accueil.html',context)
 
 def inscription(request):
     if request.method == 'POST':
