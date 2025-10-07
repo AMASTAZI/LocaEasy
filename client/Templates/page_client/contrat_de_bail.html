@@ -4,9 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FindHome - Signature du Contrat de Bail</title>
+    <meta name="csrf-token" content="{{ csrf_token }}">
+    <title>LocalEasy - Signature du Contrat de Bail</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="{% static 'css/contrat.css' %}">
+
 </head>
 <body>
     <!-- Header -->
@@ -202,6 +204,8 @@
 
     <!-- Scripts externes -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 
     <!-- Script principal -->
     <script type="text/javascript">
@@ -389,22 +393,58 @@
                 }
             }
             
-            // Confirmer la signature
-            confirmSignatureBtn.addEventListener('click', () => {
-                if (!currentSignature) {
-                    alert('Veuillez fournir votre signature avant de confirmer.');
-                    return;
-                }
-                
-                if (confirm('Êtes-vous sûr de vouloir signer ce contrat ? Cette action est définitive.')) {
-                    // Dans une application réelle, vous enverriez la signature au serveur ici
-                    console.log('Signature confirmée:', currentSignature);
-                    
-                    // Rediriger vers le tableau de bord
-                    const dashboardUrl = "{% url 'dashboard_client' %}";
-                    window.location.href = dashboardUrl;
-                }
-            });
+    // JavaScript pour récupérer la signature et envoyer les données via AJAX
+document.getElementById('confirm-signature').addEventListener('click', function() {
+    const signatureCanvas = document.getElementById('signature-canvas');
+    const typedSignature = document.getElementById('typed-signature').value;
+
+    let signature = '';
+
+    // Si une signature est dessinée sur le canvas, on la récupère en base64
+    if (signatureCanvas && signatureCanvas.toDataURL) {
+        signature = signatureCanvas.toDataURL();  // Signature dessinée (format base64)
+    } 
+    // Si une signature est tapée, on la récupère
+    else if (typedSignature) {
+        signature = typedSignature;  // Signature tapée
+    }
+
+    // Vérification si une signature est fournie
+    if (!signature) {
+        alert('Veuillez fournir une signature.');
+        return;
+    }
+
+
+    const contractDate = '2025-10-06';  // Date statique du contrat
+    const tenantName = 'Jean Dupont';   // Nom statique du locataire
+
+    // Envoi des données via AJAX
+    $.ajax({
+        url: '{% url "contract_signature" %}',  // URL Django pour la gestion de la signature
+        method: 'POST',
+        data: {
+            'contract_date': contractDate,   // Date du contrat
+            'tenant_name': tenantName,       // Nom du locataire
+            'signature': 'signature_base64', // Valeur statique
+            'csrfmiddlewaretoken': '{{ csrf_token }}'  // Protection CSRF
+        },
+        success: function(response) {
+            if (response.status === 'success') {
+                window.location.href = '{% url "dashboard_client" %}';  // Redirige vers le tableau de bord
+            } else {
+                alert('Une erreur est survenue lors de l\'enregistrement de la signature.');
+            }
+        },
+        error: function(xhr, status, error) {
+            // Affichage de l'erreur si la requête AJAX échoue
+            alert('Erreur réseau ou serveur. Veuillez réessayer.');
+            console.log('Status:', status);   // Afficher le statut de l'erreur dans la console
+            console.log('Error:', error);     // Afficher l'erreur spécifique dans la console
+        }
+    });
+});
+
             
             // Initialiser le canvas au chargement de la page
             initCanvas();

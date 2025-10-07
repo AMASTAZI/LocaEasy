@@ -36,6 +36,8 @@ class Utilisateur(AbstractUser):
     adresse = models.TextField(blank=True)
     date_inscription = models.DateTimeField(auto_now_add=True)
     
+    
+    
     class Meta:
         db_table = 'utilisateur'
 
@@ -243,6 +245,8 @@ class Reservation(models.Model):
     message = models.TextField(blank=True, null=True)
     status = models.CharField(max_length=50, default='En attente')  # Statut de la réservation
     created_at = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey(Utilisateur, on_delete=models.CASCADE, related_name='reservations')  # Relation avec l'utilisateur
+
 
     def __str__(self):
         return f"Reservation for {self.first_name} {self.last_name} at {self.property.title}"

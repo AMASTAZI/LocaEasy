@@ -4,9 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FindHome - Administration</title>
+    <title>LocalEasy - Administration</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="{% static 'css/admin.css' %}">
+    <link rel="stylesheet" href="{% static 'css/messages.css' %}">
+
 
     <style>
    
@@ -21,12 +23,23 @@
                     <i class="fas fa-home"></i>
                     LocalEasy
                 </a>
-                <ul class="nav-links">
-                    <li><a href="{% url 'accueil' %}">Accueil</a></li>
-                    <li><a href="{% url 'accueil' %}#properties">Propriétés</a></li>
-                    <li><a href="{% url 'accueil' %}#services">Services</a></li>
-                    <li><a href="{% url 'accueil' %}#contact">Contact</a></li>
+                  <ul class="nav-links">
+                    <li><a href="">Accueil</a></li>
+                    <li><a href="#properties">Propriétés</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#contact">Contact</a></li>
                 </ul>
+
+                     {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} auto-hide">
+                        {{ message }}
+                        <button class="alert-close" onclick="this.parentElement.remove()">×</button>
+                    </div>
+                {% endfor %}
+            </div>
+            {% endif %}
                 <div class="nav-actions">
                     <div class="user-menu">
                         <div class="user-avatar">
@@ -36,7 +49,7 @@
                         <i class="fas fa-chevron-down"></i>
                         <div class="dropdown-menu">
                             <a href="{% url 'profil_admin' %}"><i class="fas fa-user"></i> Mon Profil</a>
-                            <a href="#"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
+                            <a href="{% url 'deconnexion' %}"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
                         </div>
                     </div>
                     <button class="mobile-menu-btn">
@@ -67,37 +80,37 @@
                     <p>Gérez les utilisateurs et les rapports du système</p>
                 </div>
 
-                <!-- Dashboard Cards -->
-                <div class="dashboard-cards">
-                    <div class="card">
-                        <div class="card-icon users">
-                            <i class="fas fa-users"></i>
-                        </div>
-                        <h3>1,247</h3>
-                        <p>Utilisateurs inscrits</p>
-                    </div>
-                    <div class="card">
-                        <div class="card-icon reports">
-                            <i class="fas fa-chart-bar"></i>
-                        </div>
-                        <h3>24</h3>
-                        <p>Rapports générés</p>
-                    </div>
-                    <div class="card">
-                        <div class="card-icon properties">
-                            <i class="fas fa-building"></i>
-                        </div>
-                        <h3>356</h3>
-                        <p>Propriétés listées</p>
-                    </div>
-                    <div class="card">
-                        <div class="card-icon reservations">
-                            <i class="fas fa-calendar-check"></i>
-                        </div>
-                        <h3>89</h3>
-                        <p>Réservations actives</p>
-                    </div>
-                </div>
+               <!-- Dashboard Cards -->
+<div class="dashboard-cards">
+    <div class="card">
+        <div class="card-icon users">
+            <i class="fas fa-users"></i>
+        </div>
+        <h3>{{ users_count }}</h3>
+        <p>Utilisateurs inscrits</p>
+    </div>
+    <div class="card">
+        <div class="card-icon reports">
+            <i class="fas fa-chart-bar"></i>
+        </div>
+        <h3>{{ reports_count }}</h3>
+        <p>Rapports générés</p>
+    </div>
+    <div class="card">
+        <div class="card-icon properties">
+            <i class="fas fa-building"></i>
+        </div>
+        <h3>{{ properties_count }}</h3>
+        <p>Propriétés listées</p>
+    </div>
+    <div class="card">
+        <div class="card-icon reservations">
+            <i class="fas fa-calendar-check"></i>
+        </div>
+        <h3>{{ active_reservations_count }}</h3>
+        <p>Réservations actives</p>
+    </div>
+</div>
 
                 <!-- Recent Activity -->
                 <div class="section">
@@ -180,85 +193,51 @@
 
                     <div class="table-responsive">
                         <table>
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Nom</th>
-                                    <th>Email</th>
-                                    <th>Rôle</th>
-                                    <th>Date d'inscription</th>
-                                    <th>Statut</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>#001</td>
-                                    <td>Thomas Martin</td>
-                                    <td>thomas.martin@example.com</td>
-                                    <td>Utilisateur</td>
-                                    <td>15/08/2023</td>
-                                    <td><span class="status active">Actif</span></td>
-                                    <td>
-                                        <button class="action-btn edit" title="Modifier"><i class="fas fa-edit"></i></button>
-                                        <button class="action-btn delete" title="Supprimer"><i class="fas fa-trash"></i></button>
-                                        <button class="action-btn deactivate" title="Désactiver"><i class="fas fa-user-slash"></i></button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>#002</td>
-                                    <td>Marie Dubois</td>
-                                    <td>marie.dubois@example.com</td>
-                                    <td>Propriétaire</td>
-                                    <td>22/07/2023</td>
-                                    <td><span class="status active">Actif</span></td>
-                                    <td>
-                                        <button class="action-btn edit" title="Modifier"><i class="fas fa-edit"></i></button>
-                                        <button class="action-btn delete" title="Supprimer"><i class="fas fa-trash"></i></button>
-                                        <button class="action-btn deactivate" title="Désactiver"><i class="fas fa-user-slash"></i></button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>#003</td>
-                                    <td>Pierre Lambert</td>
-                                    <td>pierre.lambert@example.com</td>
-                                    <td>Administrateur</td>
-                                    <td>10/06/2023</td>
-                                    <td><span class="status active">Actif</span></td>
-                                    <td>
-                                        <button class="action-btn edit" title="Modifier"><i class="fas fa-edit"></i></button>
-                                        <button class="action-btn delete" title="Supprimer"><i class="fas fa-trash"></i></button>
-                                        <button class="action-btn deactivate" title="Désactiver"><i class="fas fa-user-slash"></i></button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>#004</td>
-                                    <td>Sophie Petit</td>
-                                    <td>sophie.petit@example.com</td>
-                                    <td>Utilisateur</td>
-                                    <td>05/09/2023</td>
-                                    <td><span class="status inactive">Inactif</span></td>
-                                    <td>
-                                        <button class="action-btn edit" title="Modifier"><i class="fas fa-edit"></i></button>
-                                        <button class="action-btn delete" title="Supprimer"><i class="fas fa-trash"></i></button>
-                                        <button class="action-btn activate" title="Activer"><i class="fas fa-user-check"></i></button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>#005</td>
-                                    <td>Jean Moreau</td>
-                                    <td>jean.moreau@example.com</td>
-                                    <td>Propriétaire</td>
-                                    <td>18/08/2023</td>
-                                    <td><span class="status active">Actif</span></td>
-                                    <td>
-                                        <button class="action-btn edit" title="Modifier"><i class="fas fa-edit"></i></button>
-                                        <button class="action-btn delete" title="Supprimer"><i class="fas fa-trash"></i></button>
-                                        <button class="action-btn deactivate" title="Désactiver"><i class="fas fa-user-slash"></i></button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nom</th>
+            <th>Email</th>
+            <th>Rôle</th>
+            <th>Date d'inscription</th>
+            <th>Statut</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in utilisateur %}
+        <tr>
+            <td>#{{ user.id }}</td>
+            <td>{{ user.first_name }} {{ user.last_name }}</td>
+            <td>{{ user.email }}</td>
+            <td>
+                {% if user.role == 'ADMIN' %}
+                    Administrateur
+                {% elif user.role == 'BAILLEUR' %}
+                    Bailleur
+                {% else %}
+                    Client
+                {% endif %}
+            </td>
+            <td>{{ user.date_inscription|date:"d/m/Y" }}</td>
+            <td>
+                <span class="status {% if user.is_active %}active{% else %}inactive{% endif %}">
+                    {% if user.is_active %}Actif{% else %}Inactif{% endif %}
+                </span>
+            </td>
+            <td>
+                <button class="action-btn edit" title="Modifier"><i class="fas fa-edit"></i></button>
+                <button class="action-btn delete" title="Supprimer" onclick="deleteUser({{ user.id }})"><i class="fas fa-trash"></i></button>
+                {% if user.is_active %}
+                    <button class="action-btn deactivate" title="Désactiver" onclick="deactivateUser({{ user.id }})"><i class="fas fa-user-slash"></i></button>
+                {% else %}
+                    <button class="action-btn activate" title="Activer" onclick="activateUser({{ user.id }})"><i class="fas fa-user-check"></i></button>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
                     </div>
                 </div>
             </div>
@@ -376,71 +355,72 @@
                 <button class="modal-close">&times;</button>
             </div>
             <div class="modal-body">
-          <form id="addUserForm">
-        <div class="form-row">
-            <!-- Prénom -->
-            <div class="form-group">
-                <label for="firstName">Prénom</label>
-                <input type="text" id="firstName" class="form-control" required>
-            </div>
+        <form method="POST" id="addUserForm" action="{% url 'add_user' %}">
+            {% csrf_token %}
             
-            <!-- Nom -->
-            <div class="form-group">
-                <label for="lastName">Nom</label>
-                <input type="text" id="lastName" class="form-control" required>
+            <div class="form-row">
+                <!-- Prénom -->
+                <div class="form-group">
+                    <label for="firstName">Prénom</label>
+                    <input type="text" id="firstName" class="form-control" name="firstName" required>
+                </div>
+
+                <!-- Nom -->
+                <div class="form-group">
+                    <label for="lastName">Nom</label>
+                    <input type="text" id="lastName" class="form-control" name="lastName" required>
+                </div>
             </div>
-        </div>
-        
-        <!-- Email -->
-        <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" id="email" class="form-control" required>
-        </div>
 
-        <!-- Âge -->
-        <div class="form-group">
-            <label for="age">Âge</label>
-            <input type="number" id="age" class="form-control" required min="18" placeholder="Votre âge">
-        </div>
+            <!-- Email -->
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" class="form-control" name="email" required>
+            </div>
 
-        <!-- Numéro de téléphone -->
-        <div class="form-group">
-            <label for="phoneNumber">Numéro de téléphone</label>
-            <input type="tel" id="phoneNumber" class="form-control" required placeholder="Ex: +237 6XX XX XX XX">
-        </div>
-        
-        <!-- Rôle -->
-        <div class="form-group">
+            <!-- Numéro de téléphone -->
+            <div class="form-group">
+                <label for="phoneNumber">Numéro de téléphone</label>
+                <input type="tel" id="phoneNumber" class="form-control" name="phoneNumber" required>
+            </div>
+
+                <div class="form-group">
             <label for="role">Rôle</label>
-            <select id="role" class="form-control" required>
+            <select id="role" class="form-control" name="role" required>
                 <option value="">Sélectionner un rôle</option>
-                <option value="user">Utilisateur</option>
-                <option value="owner">Propriétaire</option>
-                <option value="admin">Administrateur</option>
+                <option value="ADMIN">Administrateur</option>
+                <option value="BAILLEUR">Bailleur</option>
+                <option value="CLIENT">Client</option>
             </select>
         </div>
 
-        <!-- Statut -->
-        <div class="form-group">
-            <label for="status">Statut</label>
-            <select id="status" class="form-control" required>
-                <option value="active">Actif</option>
-                <option value="inactive">Inactif</option>
-            </select>
-        </div>
 
-        <!-- Mot de passe -->
-        <div class="form-group">
-            <label for="password">Mot de passe</label>
-            <input type="password" id="password" class="form-control" required placeholder="Votre mot de passe">
-        </div>
+            <!-- Statut -->
+            <div class="form-group">
+                <label for="status">Statut</label>
+                <select id="status" class="form-control" name="status" required>
+                    <option value="active">Actif</option>
+                    <option value="inactive">Inactif</option>
+                </select>
+            </div>
 
-        <!-- Confirmer mot de passe -->
-        <div class="form-group">
-            <label for="confirmPassword">Confirmer le mot de passe</label>
-            <input type="password" id="confirmPassword" class="form-control" required placeholder="Confirmer votre mot de passe">
-        </div>
-    </form>
+            <!-- Mot de passe -->
+            <div class="form-group">
+                <label for="password">Mot de passe</label>
+                <input type="password" id="password" class="form-control" name="password" required>
+            </div>
+
+            <!-- Confirmer mot de passe -->
+            <div class="form-group">
+                <label for="confirmPassword">Confirmer le mot de passe</label>
+                <input type="password" id="confirmPassword" class="form-control" name="confirmPassword" required>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Enregistrer</button>
+            </div>  
+        </form>
+
 
             </div>
             <div class="modal-footer">
@@ -507,8 +487,33 @@
         </div>
     </div>
 
-    <script src="{% static 'js/admin.js' %}">
-     
+    <script src="{% static 'js/admin.js' %}"></script>
+
+    <script>
+         // Function to handle user deletion
+    function deleteUser(userId) {
+        if (confirm("Êtes-vous sûr de vouloir supprimer cet utilisateur ?")) {
+            // Implement the deletion logic here
+            window.location.href = `/administrateur/delete_user/${userId}/`;  // Redirect to a delete view
+        }
+    }
+
+    // Function to handle user deactivation
+    function deactivateUser(userId) {
+        if (confirm("Êtes-vous sûr de vouloir désactiver cet utilisateur ?")) {
+            window.location.href = `/administrateur/deactivate_user/${userId}/`;  // Redirect to deactivation view
+        }
+    }
+
+    // Function to handle user activation
+    function activateUser(userId) {
+        if (confirm("Êtes-vous sûr de vouloir activer cet utilisateur ?")) {
+            window.location.href = `/administrateur/activate_user/${userId}/`;  // Redirect to activation view
+        }
+    }
+
     </script>
+     
+
 </body>
 </html>

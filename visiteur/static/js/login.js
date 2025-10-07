@@ -104,7 +104,6 @@
         // window.location.href = 'dashboard.html'; // Décommente cette ligne pour rediriger
     } else {
         // Si la validation échoue, afficher un message d'erreur
-        alert('Veuillez vérifier vos informations de connexion.');
     }
 });
 

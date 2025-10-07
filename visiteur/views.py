@@ -141,3 +141,8 @@ def deconnexion(request):  # page de déconnexion
     # Rediriger vers la page de login
     return redirect(reverse("login_user"))
 
+
+
+
+
+

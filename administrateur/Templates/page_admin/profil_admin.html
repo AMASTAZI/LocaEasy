@@ -4,9 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FindHome - Administration</title>
+    <title>LocalEasy - Administration</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="{% static 'css/profil.css' %}">
+    <link rel="stylesheet" href="{% static 'css/messages.css' %}">
+
 
     <style>
       
@@ -22,11 +24,22 @@
                     LocalEasy
                 </a>
                 <ul class="nav-links">
-                    <li><a href="{% url 'accueil' %}">Accueil</a></li>
-                    <li><a href="{% url 'accueil' %}#properties">Propriétés</a></li>
-                    <li><a href="{% url 'accueil' %}#services">Services</a></li>
-                    <li><a href="{% url 'accueil' %}#contact">Contact</a></li>
+                    <li><a href="">Accueil</a></li>
+                    <li><a href="#properties">Propriétés</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#contact">Contact</a></li>
                 </ul>
+
+                                 {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} auto-hide">
+                        {{ message }}
+                        <button class="alert-close" onclick="this.parentElement.remove()">×</button>
+                    </div>
+                {% endfor %}
+            </div>
+            {% endif %}
                 <div class="nav-actions">
                     <div class="user-menu">
                         <div class="user-avatar">
@@ -36,7 +49,7 @@
                         <i class="fas fa-chevron-down"></i>
                         <div class="dropdown-menu">
                             <a href="" class="active"><i class="fas fa-user-cog"></i> Profil Admin</a>
-                            <a href="#"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
+                            <a href="{% url 'deconnexion' %}"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
                         </div>
                     </div>
                     <button class="mobile-menu-btn">
@@ -72,7 +85,7 @@
                         <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Admin">
                     </div>
                     <div class="profile-info">
-                        <h2>Jean Dupont</h2>
+                        <h2>{{request.user.first_name}}</h2>
                         <p>Administrateur système</p>
                         <span class="badge badge-admin">Administrateur</span>
                     </div>
@@ -101,48 +114,39 @@
 
             <!-- Profile Information -->
             <div class="section">
-                <div class="section-header">
-                    <h2 class="section-title">Informations du profil</h2>
-                    <button class="btn" id="editProfileBtn"><i class="fas fa-edit"></i> Modifier</button>
-                </div>
+    <div class="section-header">
+        <h2 class="section-title">Informations du profil</h2>
+        <button class="btn" id="editProfileBtn"><i class="fas fa-edit"></i> Modifier</button>
+    </div>
 
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="firstName">Prénom</label>
-                        <input type="text" id="firstName" class="form-control" value="Jean" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label for="lastName">Nom</label>
-                        <input type="text" id="lastName" class="form-control" value="Dupont" readonly>
-                    </div>
-                </div>
+    <div class="form-row">
+        <div class="form-group">
+            <label for="firstName">Prénom</label>
+            <input type="text" id="firstName" class="form-control" value="{{ user.first_name }}" readonly>
+        </div>
+        <div class="form-group">
+            <label for="lastName">Nom</label>
+            <input type="text" id="lastName" class="form-control" value="{{ user.last_name }}" readonly>
+        </div>
+    </div>
 
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" class="form-control" value="jean.dupont@findhome.com" readonly>
-                </div>
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" class="form-control" value="{{ user.email }}" readonly>
+    </div>
 
-                <div class="form-group">
-                    <label for="phone">Téléphone</label>
-                    <input type="tel" id="phone" class="form-control" value="+33 6 12 34 56 78" readonly>
-                </div>
+    <div class="form-group">
+        <label for="phone">Téléphone</label>
+        <input type="tel" id="phone" class="form-control" value="{{ user.telephone }}" readonly>
+    </div>
 
-                <div class="form-group">
-                    <label for="role">Rôle</label>
-                    <input type="text" id="role" class="form-control" value="Administrateur système" readonly>
-                </div>
+    <div class="form-group">
+        <label for="role">Rôle</label>
+        <input type="text" id="role" class="form-control" value="{{ user.role }}" readonly>
+    </div>
 
-
-                   <div class="form-group">
-                    <label for="role">Mot de passe</label>
-                    <input type="password" id="role" class="form-control">
-                </div>
-
-                <div class="form-group">
-                    <label for="bio">Bio</label>
-                    <textarea id="bio" class="form-control" rows="4" readonly>Administrateur de la plateforme FindHome avec 5 ans d'expérience dans la gestion de plateformes immobilières.</textarea>
-                </div>
-            </div>
+ 
+</div>
 
             <!-- Recent Activity -->
             <div class="section">
@@ -217,43 +221,39 @@
                 <button class="modal-close">&times;</button>
             </div>
             <div class="modal-body">
-                <form id="editProfileForm">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="editFirstName">Prénom</label>
-                            <input type="text" id="editFirstName" class="form-control" value="Jean">
-                        </div>
-                        <div class="form-group">
-                            <label for="editLastName">Nom</label>
-                            <input type="text" id="editLastName" class="form-control" value="Dupont">
-                        </div>
-                    </div>
+               <form method="POST" id="editProfileForm" action="{% url 'edit_profile' %}">
+    {% csrf_token %}
+    <div class="form-row">
+        <div class="form-group">
+            <label for="editFirstName">Prénom</label>
+            <input type="text" id="editFirstName" class="form-control" name="editFirstName" value="{{ user.first_name }}">
+        </div>
+        <div class="form-group">
+            <label for="editLastName">Nom</label>
+            <input type="text" id="editLastName" class="form-control" name="editLastName" value="{{ user.last_name }}">
+        </div>
+    </div>
 
-                    <div class="form-group">
-                        <label for="editEmail">Email</label>
-                        <input type="email" id="editEmail" class="form-control" value="jean.dupont@findhome.com">
-                    </div>
+    <div class="form-group">
+        <label for="editEmail">Email</label>
+        <input type="email" id="editEmail" class="form-control" name="editEmail" value="{{ user.email }}">
+    </div>
 
-                    <div class="form-group">
-                        <label for="editPhone">Téléphone</label>
-                        <input type="tel" id="editPhone" class="form-control" value="+33 6 12 34 56 78">
-                    </div>
+    <div class="form-group">
+        <label for="editPhone">Téléphone</label>
+        <input type="tel" id="editPhone" class="form-control" name="editPhone" value="{{ user.telephone }}">
+    </div>
 
-                    <div class="form-group">
-                        <label for="editRole">Rôle</label>
-                        <input type="text" id="editRole" class="form-control" value="Administrateur système">
-                    </div>
+    <div class="form-group">
+        <label for="editRole">Rôle</label>
+        <input type="text" id="editRole" class="form-control" name="editRole" value="{{ user.role }}">
+    </div>
 
-                    <div class="form-group">
-                        <label for="editBio">Bio</label>
-                        <textarea id="editBio" class="form-control" rows="4">Administrateur de la plateforme FindHome avec 5 ans d'expérience dans la gestion de plateformes immobilières.</textarea>
-                    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
+    </div>
+</form>
 
-                    <div class="form-group">
-                        <label for="profileImage">Photo de profil</label>
-                        <input type="file" id="profileImage" class="form-control" accept="image/*">
-                    </div>
-                </form>
             </div>
             <div class="modal-footer">
                 <button class="btn btn-outline" id="cancelEditProfile">Annuler</button>

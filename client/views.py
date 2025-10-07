@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib import messages
 
@@ -15,7 +16,10 @@ def page_client(request):
     return render(request,'page_client/page_client.html',context)
 
 def dashboard_client(request):
-    return render(request,'page_client/dashboard_client.html')
+    # Récupère les réservations liées à l'utilisateur connecté
+    reservations = Reservation.objects.filter(user=request.user)
+    
+    return render(request, 'page_client/dashboard_client.html', {'reservations': reservations})
 
 
 
@@ -59,7 +63,9 @@ def reservation_form(request, property_id):
             check_in=check_in,
             check_out=check_out,
             occupants=occupants,
-            message=message
+            message=message,
+            user=request.user  # Associate the reservation with the logged-in user
+
         )
         reservation.save()
 
@@ -70,3 +76,56 @@ def reservation_form(request, property_id):
 
     return render(request, 'page_client/formulaire_reservation.html', {'property': property})
 
+
+def contract_signature(request):
+    if request.method == 'POST':
+        # Vérification de la présence des données envoyées
+        contract_date = request.POST.get('contract_date')
+        tenant_name = request.POST.get('tenant_name')
+        signature = request.POST.get('signature')
+
+        # Affichage dans la console pour vérifier ce qui est reçu
+        print(f"Contract Date: {contract_date}")
+        print(f"Tenant Name: {tenant_name}")
+        print(f"Signature: {signature}")
+
+        if contract_date and tenant_name and signature:
+            # Si tout est correct, tu peux continuer avec l'enregistrement de ces données
+            # Par exemple : Contract.objects.create(date=contract_date, tenant_name=tenant_name, signature=signature)
+            return JsonResponse({'status': 'success'})
+        else:
+            # Si des données sont manquantes, retourne une erreur
+            return JsonResponse({'status': 'error', 'message': 'Données manquantes'}, status=400)
+    else:
+        return render(request, 'contract/contract_signature.html')
+    
+    
+    
+    
+def manage_profile(request):
+    if request.method == 'POST':
+        # Get the current user
+        user = request.user
+
+        # Update the user's profile with the form data
+        user.first_name = request.POST.get('first-name')
+        user.last_name = request.POST.get('last-name')
+        user.email = request.POST.get('email')
+        user.telephone = request.POST.get('phone')
+        user.adresse = request.POST.get('address')
+        user.date_of_birth = request.POST.get('birthdate')
+        user.profession = request.POST.get('profession')
+
+        # Save the updated user profile
+        user.save()
+
+        # Success message
+        messages.success(request, "Vos informations ont été mises à jour avec succès.")
+        return redirect('manage_profile')  # Redirect to the same page to see changes
+
+    else:
+        # If GET request, pre-populate the form with the current user's data
+        user = request.user
+        return render(request, 'page_client/dashboard_client.html', {
+            'user': user
+        })

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FindHome - Formulaire de réservation</title>
+    <title>LocalEasy - Formulaire de réservation</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="{% static 'css/formulaire_reservation.css' %}">
 </head>
@@ -114,19 +114,19 @@
                         <h4 class="summary-title">Récapitulatif</h4>
                         <div class="summary-item">
                             <span>Loyer mensuel</span>
-                            <span>{{ property.price }}€</span>
+                            <span>{{ property.price }}FCFA</span>
                         </div>
                         <div class="summary-item">
                             <span>Frais de dossier</span>
-                            <span>50€</span>
+                            <span>50000FCFA</span>
                         </div>
                         <div class="summary-item">
                             <span>Caution</span>
-                            <span>{{ property.price }}€</span>
+                            <span>{{ property.price }}FCFA</span>
                         </div>
                         <div class="summary-item summary-total">
                             <span>Total à verser</span>
-                            <span>{{ property.price}}FCFA</span>
+                            <span>{{ property.price}} + 50000 FCFA</span>
                         </div>
                     </div>
 
