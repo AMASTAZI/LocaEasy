@@ -73,7 +73,7 @@ def add_user(request):
             telephone=telephone,
             role=role,
             password=hashed_password,
-            username=username  # Assign the generated or provided username
+            username=email  # Assign the generated or provided username
         )
         user.save()
 
