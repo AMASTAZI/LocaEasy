@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FindHome - Profil Bailleur</title>
+    <title>LocalEasy - Profil Bailleur</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="{% static 'css/messages.css' %}">
 
@@ -570,10 +570,10 @@
                     LocalEasy
                 </a>
                 <ul class="nav-links">
-                    <li><a href="{% url 'accueil' %}">Accueil</a></li>
-                    <li><a href="{% url 'accueil' %}#properties">Propriétés</a></li>
-                    <li><a href="{% url 'accueil' %}#services">Services</a></li>
-                    <li><a href="{% url 'accueil' %}#contact">Contact</a></li>
+                    <li><a href="">Accueil</a></li>
+                    <li><a href="">Propriétés</a></li>
+                    <li><a href="">Services</a></li>
+                    <li><a href="">Contact</a></li>
                 </ul>
 
                                 {% if messages %}
@@ -591,7 +591,7 @@
                         <div class="user-avatar">
                             <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Thomas Martin">
                         </div>
-                        <span class="user-name">Thomas Martin</span>
+                        <span class="user-name">{{request.user.first_name}}</span>
                         <i class="fas fa-chevron-down"></i>
                         <div class="dropdown-menu">
                             <a href="#profile"><i class="fas fa-user"></i> Mon Profil</a>
@@ -645,47 +645,35 @@
                             </div>
                         </div>
 
-                        <form class="profile-form">
-                            <div class="form-group">
-                                <label for="firstName">Prénom</label>
-                                <input type="text" id="firstName" class="form-control" value="Thomas">
-                            </div>
-                            <div class="form-group">
-                                <label for="lastName">Nom</label>
-                                <input type="text" id="lastName" class="form-control" value="Martin">
-                            </div>
-                            <div class="form-group">
-                                <label for="email">Adresse email</label>
-                                <input type="email" id="email" class="form-control" value="thomas.martin@example.com">
-                            </div>
-                            <div class="form-group">
-                                <label for="phone">Téléphone</label>
-                                <input type="tel" id="phone" class="form-control" value="06 12 34 56 78">
-                            </div>
-                            <div class="form-group">
-                                <label for="address">Adresse</label>
-                                <input type="text" id="address" class="form-control" value="15 Rue de la République">
-                            </div>
-                            <div class="form-group">
-                                <label for="city">Ville</label>
-                                <input type="text" id="city" class="form-control" value="Lyon">
-                            </div>
-                            <div class="form-group">
-                                <label for="postalCode">Code postal</label>
-                                <input type="text" id="postalCode" class="form-control" value="69001">
-                            </div>
-                            <div class="form-group">
-                                <label for="country">Pays</label>
-                                <input type="text" id="country" class="form-control" value="France">
-                            </div>
-                            <div class="form-group full-width">
-                                <label for="bio">À propos de moi</label>
-                                <textarea id="bio" class="form-control" rows="4">Je suis propriétaire bailleur depuis 5 ans et je gère actuellement 8 propriétés dans la région lyonnaise.</textarea>
-                            </div>
-                            <div class="form-group full-width">
-                                <button type="submit" class="btn">Enregistrer les modifications</button>
-                            </div>
-                        </form>
+                        <form class="profile-form" method="POST" action="{% url 'profile' %}">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="firstName">Prénom</label>
+        <input type="text" id="firstName" class="form-control" name="firstName" value="{{ user.first_name }}">
+    </div>
+    <div class="form-group">
+        <label for="lastName">Nom</label>
+        <input type="text" id="lastName" class="form-control" name="lastName" value="{{ user.last_name }}">
+    </div>
+    <div class="form-group">
+        <label for="email">Adresse email</label>
+        <input type="email" id="email" class="form-control" name="email" value="{{ user.email }}">
+    </div>
+    <div class="form-group">
+        <label for="phone">Téléphone</label>
+        <input type="tel" id="phone" class="form-control" name="phone" value="{{ user.telephone }}">
+    </div>
+    <div class="form-group">
+        <label for="password">Nouveau mot de passe</label>
+        <input type="password" id="password" class="form-control" name="password" placeholder="Laissez vide pour ne pas changer">
+    </div>
+
+    <div class="form-group full-width">
+        <button type="submit" class="btn">Enregistrer les modifications</button>
+    </div>
+</form>
+
+
                     </div>
                 </div>
 

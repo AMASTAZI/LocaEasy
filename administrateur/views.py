@@ -2,13 +2,17 @@ from django.shortcuts import get_object_or_404, redirect, render
 from bd.models import Property, Reservation, Utilisateur
 from django.contrib import messages
 from django.contrib.auth.hashers import make_password
+from django.utils.text import slugify  # To generate a slug (unique username)
+from django.contrib.auth.decorators import login_required
+
+
 
 
 # Create your views here.
 
 
 
-
+@login_required(login_url="login_user")
 def dashboard_admin(request):
     # Fetch the counts for users, reports, properties, and reservations
     users_count = Utilisateur.objects.count()
@@ -24,11 +28,14 @@ def dashboard_admin(request):
         'utilisateur': user
     })
     
+    
+@login_required(login_url="login_user")   
 def profil_admin(request):
     return render(request,'page_admin/profil_admin.html')
 
-from django.utils.text import slugify  # To generate a slug (unique username)
 
+
+@login_required(login_url="login_user")
 def add_user(request):
     if request.method == 'POST':
         # Get form data
@@ -84,6 +91,8 @@ def add_user(request):
     return render(request, 'page_admin/add_user.html')
 
 
+
+@login_required(login_url="login_user")
 def delete_user(request, user_id):
     user = get_object_or_404(Utilisateur, id=user_id)
     
@@ -98,6 +107,8 @@ def delete_user(request, user_id):
 
 
 
+
+@login_required(login_url="login_user")
 def deactivate_user(request, user_id):
     user = get_object_or_404(Utilisateur, id=user_id)
     
@@ -111,7 +122,7 @@ def deactivate_user(request, user_id):
     return redirect('dashboard_admin')  # Redirect back to the dashboard
 
 
-
+@login_required(login_url="login_user")
 def activate_user(request, user_id):
     user = get_object_or_404(Utilisateur, id=user_id)
     
@@ -127,6 +138,8 @@ def activate_user(request, user_id):
 
 
 
+
+@login_required(login_url="login_user")
 def edit_profile(request):
     user = request.user  # Assuming the user is logged in
 

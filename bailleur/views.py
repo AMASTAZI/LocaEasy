@@ -2,6 +2,8 @@ from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+
 
 from bd.models import Property
 
@@ -9,15 +11,17 @@ from bd.models import Property
 # Create your views here.
 
 
+@login_required(login_url="login_user")
 def page_bailleur(request):
     return render(request,'page_bailleur/bailleur.html')
 
 
+@login_required(login_url="login_user")
 def page_profil_bailleur(request):
     return render(request,'page_bailleur/profil_bailleur.html')
 
 
-
+@login_required(login_url="login_user")
 def page_gerer_propriete(request):
     # Récupérer toutes les propriétés de la base de données
     properties = Property.objects.all()
@@ -26,7 +30,7 @@ def page_gerer_propriete(request):
     return render(request, 'page_bailleur/gerer_proprieter.html', {'properties': properties})
 
 
-
+@login_required(login_url="login_user")
 def add_property(request):
     if request.method == 'POST':
         try:
@@ -75,6 +79,7 @@ def add_property(request):
     return render(request, 'page_bailleur/gerer_proprieter.html')
 
 
+@login_required(login_url="login_user")
 def delete_property(request, property_id):
     # Récupérer la propriété à supprimer
     property = get_object_or_404(Property, id=property_id)
@@ -89,7 +94,7 @@ def delete_property(request, property_id):
 
 
 
-
+@login_required(login_url="login_user")
 def edit_property(request, property_id):
     property = get_object_or_404(Property, id=property_id)
 
@@ -125,7 +130,6 @@ def edit_property(request, property_id):
 
 
 
-
 def get_property(request, property_id):
     # Récupérer la propriété par son ID
     property = get_object_or_404(Property, id=property_id)
@@ -148,3 +152,38 @@ def get_property(request, property_id):
     
     # Retourner les données de la propriété sous forme de JSON
     return JsonResponse(property_data)
+
+
+
+@login_required(login_url="login_user")
+def profile_view(request):
+    user = request.user
+
+    # Si la requête est de type POST (soumission du formulaire)
+    if request.method == 'POST':
+        # Récupérer les données du formulaire
+        first_name = request.POST.get('firstName')
+        last_name = request.POST.get('lastName')
+        email = request.POST.get('email')
+        telephone = request.POST.get('phone')
+        password = request.POST.get('password')  # Nouveau mot de passe
+
+        # Mise à jour des informations de l'utilisateur
+        user.first_name = first_name
+        user.last_name = last_name
+        user.email = email
+        user.telephone = telephone
+
+        # Si un mot de passe a été saisi, mettre à jour le mot de passe
+        if password:
+            user.set_password(password)
+
+        # Enregistrer les modifications dans la base de données
+        user.save()
+
+        # Rediriger l'utilisateur après la mise à jour
+        return redirect('profile')  # Remplacez 'profile' par l'URL appropriée
+
+    else:
+        # Si c'est une requête GET, afficher les informations actuelles
+        return render(request, 'page_bailleur/profil_bailleur.html', {'user': user})

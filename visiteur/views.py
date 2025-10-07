@@ -3,6 +3,8 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
+from django.contrib.auth.decorators import login_required
+
 
 
 
@@ -10,11 +12,26 @@ from bd.models import Property, Utilisateur
 
 # Create your views here.
 def accueil(request):
-    property = Property.objects.all()
-    context = {
-        'properties':property
-    }
-    return render(request,'page_visiteur/accueil.html',context)
+    # Vérifier si l'utilisateur est connecté
+    if request.user.is_authenticated:
+        utilisateur = request.user  # Utilisateur connecté
+
+        # Redirection selon le rôle de l'utilisateur
+        if utilisateur.role == Utilisateur.RoleUtilisateur.ADMIN:
+            return redirect("dashboard_admin")  # Redirection vers le tableau de bord Admin
+
+        elif utilisateur.role == Utilisateur.RoleUtilisateur.BAILLEUR:
+            return redirect("page_bailleur")  # Redirection vers la page Bailleur
+
+        elif utilisateur.role == Utilisateur.RoleUtilisateur.CLIENT:
+            return redirect("page_client")  # Redirection vers la page Client
+    else:
+        # Si l'utilisateur n'est pas connecté, afficher la page d'accueil classique
+        property = Property.objects.all()
+        context = {
+            'properties': property
+        }
+        return render(request, 'page_visiteur/accueil.html', context)
 
 def inscription(request):
     if request.method == 'POST':
@@ -123,7 +140,7 @@ def login_user(request):
     # Si ce n'est pas une méthode POST
     return render(request, "page_visiteur/login.html")
 
-
+@login_required(login_url="login_user")
 def deconnexion(request):  # page de déconnexion
     # Récupérer l'utilisateur avant de détruire la session
     user = request.user  

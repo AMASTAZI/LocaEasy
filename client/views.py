@@ -3,11 +3,13 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib import messages
 
 from bd.models import Property, Reservation
+from django.contrib.auth.decorators import login_required
+
 
 # Create your views here.
 
 
-
+@login_required(login_url="login_user")
 def page_client(request):
     property = Property.objects.all()
     context = {
@@ -15,6 +17,7 @@ def page_client(request):
     }
     return render(request,'page_client/page_client.html',context)
 
+@login_required(login_url="login_user")
 def dashboard_client(request):
     # Récupère les réservations liées à l'utilisateur connecté
     reservations = Reservation.objects.filter(user=request.user)
@@ -22,7 +25,7 @@ def dashboard_client(request):
     return render(request, 'page_client/dashboard_client.html', {'reservations': reservations})
 
 
-
+@login_required(login_url="login_user")
 def formulaire_reservation(request, property_id):
     # Récupérer la propriété à partir de l'ID dans l'URL
     property = get_object_or_404(Property, id=property_id)
@@ -41,6 +44,8 @@ def contrat_de_bail(request, reservation_id):
     # Passer les informations de la réservation et de la propriété au template
     return render(request, 'page_client/contrat_de_bail.html', {'reservation': reservation, 'property': property})
 
+
+@login_required(login_url="login_user")
 def reservation_form(request, property_id):
     property = Property.objects.get(id=property_id)
     if request.method == 'POST':
@@ -77,6 +82,7 @@ def reservation_form(request, property_id):
     return render(request, 'page_client/formulaire_reservation.html', {'property': property})
 
 
+@login_required(login_url="login_user")
 def contract_signature(request):
     if request.method == 'POST':
         # Vérification de la présence des données envoyées
@@ -101,7 +107,7 @@ def contract_signature(request):
     
     
     
-    
+@login_required(login_url="login_user")
 def manage_profile(request):
     if request.method == 'POST':
         # Get the current user
